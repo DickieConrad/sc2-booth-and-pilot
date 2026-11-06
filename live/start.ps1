@@ -10,6 +10,7 @@ param([switch]$NoMic, [switch]$NoClaude, [switch]$Fresh)
 
 $root = Split-Path -Parent $PSScriptRoot
 $pidFile = Join-Path $root "live\out\stack.pids"
+New-Item -ItemType Directory -Force (Join-Path $root "live\out") | Out-Null   # logs and stack.pids; not in git
 $old = @{}
 if (Test-Path $pidFile) {
     foreach ($line in Get-Content $pidFile) {

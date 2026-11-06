@@ -203,7 +203,6 @@ source rust/env.sh
 curl --proto '=https' -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path --default-toolchain none
 (cd rust/coach-core && cargo build --release)
 (cd rust/panel-reader && cargo build --release)
-mkdir -p live/out        # the start script writes its logs and PID file here
 ```
 
 ```powershell

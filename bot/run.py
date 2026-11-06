@@ -52,7 +52,7 @@ def parse_args(argv=None) -> argparse.Namespace:
         "--vs",
         default="human",
         choices=("human", "bot", *DIFFICULTIES),
-        help="human = Dickie plays it in realtime; a difficulty = the bot plays the built-in AI; "
+        help="human = you play it in realtime; a difficulty = the bot plays the built-in AI; "
         "bot = 1v1 vs --bot2 (default: the same bot)",
     )
     ap.add_argument(
@@ -64,9 +64,9 @@ def parse_args(argv=None) -> argparse.Namespace:
         "--2v2",
         dest="two_v_two",
         action="store_true",
-        help="vs human: Dickie + built-in AI ally vs two bots; vs AI: two bots vs two AIs",
+        help="vs human: you + built-in AI ally vs two bots; vs AI: two bots vs two AIs",
     )
-    ap.add_argument("--race", default="terran", choices=("terran", "protoss", "zerg", "random"), help="Dickie's race")
+    ap.add_argument("--race", default="terran", choices=("terran", "protoss", "zerg", "random"), help="your race")
     ap.add_argument("--ally-race", default="protoss", choices=("terran", "protoss", "zerg", "random"))
     ap.add_argument("--ally-difficulty", default="hard", choices=DIFFICULTIES)
     ap.add_argument(
@@ -102,8 +102,8 @@ def parse_args(argv=None) -> argparse.Namespace:
         help="bot vs AI only: stop the game at this game time (m:ss or seconds); it then ends as a Tie "
         "(python-sc2's game_time_limit), reported as 'time limit reached'",
     )
-    ap.add_argument("--window", default="1600x900", help="Dickie's window size WxH (default 1600x900)")
-    ap.add_argument("--fullscreen", action="store_true", help="Dickie's window fullscreen")
+    ap.add_argument("--window", default="1600x900", help="your window size WxH (default 1600x900)")
+    ap.add_argument("--fullscreen", action="store_true", help="your window fullscreen")
     ap.add_argument(
         "--coach-test",
         action="store_true",
@@ -114,7 +114,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     ap.add_argument(
         "--replay",
         help="save the replay to this .SC2Replay path (Windows path); default bot/out/replays/<bot>-vs-<ai>-<time>"
-        " (Dickie wanted to rewatch the MarineKing micro of a game we hadn't saved); 'none' to skip",
+        "; 'none' to skip",
     )
     ap.add_argument(
         "--stock",
@@ -247,7 +247,7 @@ def main(argv=None) -> int:
     realtime = args.realtime or args.vs == "human" or args.coach_test
     fullscreen = args.fullscreen or args.coach_test
     if time_limit is not None and args.vs == "human":
-        print("error: --time-limit is for bot vs AI tests (Dickie's games end when he leaves)", file=sys.stderr)
+        print("error: --time-limit is for bot vs AI tests (your own games end when you leave)", file=sys.stderr)
         return 2
     if args.stock and len(seats) > 2:
         print("error: --stock is 1v1 only (python-sc2's run_game can't seat a 2v2)", file=sys.stderr)
@@ -256,7 +256,7 @@ def main(argv=None) -> int:
     where = f"{map_ref} (sent to SC2 as bytes)" if isinstance(map_ref, Path) else f"{map_ref} (SC2 Maps folder)"
     print(f"Map: {where}")
     for s in seats:
-        who = {"human": "Dickie", "computer": f"built-in AI ({s.difficulty})", "bot": f"bot {s.bot}"}[s.kind]
+        who = {"human": "you", "computer": f"built-in AI ({s.difficulty})", "bot": f"bot {s.bot}"}[s.kind]
         print(f"  team {s.team}: {who}, {s.race}")
     limit = f"  time limit: {clock(time_limit)}" if time_limit else ""
     print(f"realtime={realtime}  steering file: {COMMAND_FILE}{limit}")
