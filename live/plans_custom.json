@@ -1,0 +1,1071 @@
+{
+ "plans": {
+  "M": {
+   "name": "MMM",
+   "tag": "Bio macro",
+   "hit": "6:15",
+   "summary": "Reaper expand into 3 Barracks (1 Reactor, 2 Tech Labs) + reactored Starport. Stim, Combat Shield, +1. Move out at 6:00 with ~16 Marines, 6 Marauders, 4 Medivacs, then 5 Rax on 3 bases. SCVs never stop.",
+   "title": "Reaper FE into 3-Rax MMM",
+   "steps": [
+    {
+     "sec": 18,
+     "t": "0:18",
+     "supply": 14,
+     "action": "Supply Depot",
+     "note": "Ramp wall. SCVs nonstop all game: 4 then S."
+    },
+    {
+     "sec": 41,
+     "t": "0:41",
+     "supply": 16,
+     "action": "Barracks",
+     "note": "Wall piece 2. Leave the add-on space free on its right."
+    },
+    {
+     "sec": 45,
+     "t": "0:45",
+     "supply": 16,
+     "action": "Refinery",
+     "note": "3 SCVs on gas when done."
+    },
+    {
+     "sec": 88,
+     "t": "1:28",
+     "supply": 19,
+     "action": "Reaper",
+     "note": "Scout both enemy bases."
+    },
+    {
+     "sec": 90,
+     "t": "1:30",
+     "supply": 19,
+     "action": "Orbital Command",
+     "note": "MULE as soon as it finishes."
+    },
+    {
+     "sec": 105,
+     "t": "1:45",
+     "supply": 20,
+     "action": "Command Center (natural)",
+     "note": "400 minerals. Keep making SCVs from the main."
+    },
+    {
+     "sec": 112,
+     "t": "1:52",
+     "supply": 20,
+     "action": "Supply Depot",
+     "note": "Completes the wall."
+    },
+    {
+     "sec": 125,
+     "t": "2:05",
+     "supply": 21,
+     "action": "Factory",
+     "note": "Only needed to unlock the Starport."
+    },
+    {
+     "sec": 140,
+     "t": "2:20",
+     "supply": 22,
+     "action": "Reactor on Barracks",
+     "note": "Barracks, then C. Reaper is out."
+    },
+    {
+     "sec": 145,
+     "t": "2:25",
+     "supply": 22,
+     "action": "Refinery #2",
+     "note": ""
+    },
+    {
+     "sec": 170,
+     "t": "2:50",
+     "supply": 25,
+     "action": "Starport",
+     "note": "As soon as the Factory finishes."
+    },
+    {
+     "sec": 170,
+     "t": "2:50",
+     "supply": 25,
+     "action": "Reactor on Factory",
+     "note": "The Starport takes this Reactor at 3:26."
+    },
+    {
+     "sec": 176,
+     "t": "2:56",
+     "supply": 26,
+     "action": "Marines x2 continuous",
+     "note": "Never let the reactored Barracks sit idle."
+    },
+    {
+     "sec": 185,
+     "t": "3:05",
+     "supply": 28,
+     "action": "Bunker (natural)",
+     "note": "2v2 insurance. Salvage later if unused."
+    },
+    {
+     "sec": 195,
+     "t": "3:15",
+     "supply": 30,
+     "action": "Barracks #2 and #3",
+     "note": "Both get a Tech Lab (X) when done."
+    },
+    {
+     "sec": 206,
+     "t": "3:26",
+     "supply": 31,
+     "action": "Starport onto the Factory Reactor",
+     "note": "Lift (L), land on the Reactor."
+    },
+    {
+     "sec": 210,
+     "t": "3:30",
+     "supply": 32,
+     "action": "Medivac x2 + Supply Depot",
+     "note": "One depot every ~25s from here."
+    },
+    {
+     "sec": 215,
+     "t": "3:35",
+     "supply": 33,
+     "action": "Refinery #3",
+     "note": ""
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": 38,
+     "action": "Stimpack (Rax 2) + Combat Shield (Rax 3)",
+     "note": "Stim done 5:40. Do not be late."
+    },
+    {
+     "sec": 245,
+     "t": "4:05",
+     "supply": 39,
+     "action": "Marauders continuous from both Tech Lab Rax",
+     "note": "Research and production run at the same time."
+    },
+    {
+     "sec": 255,
+     "t": "4:15",
+     "supply": 41,
+     "action": "Engineering Bay",
+     "note": "+1 Infantry Weapons as soon as it finishes. vs Zerg: turret in each mineral line by 5:15 (Mutas)."
+    },
+    {
+     "sec": 270,
+     "t": "4:30",
+     "supply": 44,
+     "action": "Command Center #3 (in-base)",
+     "note": "Float it to the third after the push. PF vs Zerg."
+    },
+    {
+     "sec": 285,
+     "t": "4:45",
+     "supply": 48,
+     "action": "Medivac x2",
+     "note": "Four Medivacs total."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": 52,
+     "action": "Barracks #4 and #5 (Reactors)",
+     "note": "5 Rax: 3 Reactor, 2 Tech Lab."
+    },
+    {
+     "sec": 315,
+     "t": "5:15",
+     "supply": 56,
+     "action": "Refinery #4",
+     "note": ""
+    },
+    {
+     "sec": 340,
+     "t": "5:40",
+     "supply": 62,
+     "action": "Concussive Shells",
+     "note": "After Combat Shield."
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": 66,
+     "action": "MOVE OUT",
+     "note": "~16 Marines, 6 Marauders, 4 Medivacs, Stim + Shield. Meet the ally first."
+    },
+    {
+     "sec": 375,
+     "t": "6:15",
+     "supply": 70,
+     "action": "HIT",
+     "note": "Stim on contact. Marauders in front, Marines behind. Keep making units at home."
+    },
+    {
+     "sec": 390,
+     "t": "6:30",
+     "supply": 72,
+     "action": "Armory + 2nd Engineering Bay",
+     "note": "+1 Armor now, +2 Weapons when +1 is done."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": 80,
+     "action": "Barracks #6-8",
+     "note": "8 Rax on 3 bases. Widow Mines vs Banelings, Ghosts vs Templar."
+    }
+   ]
+  },
+  "PX": {
+   "name": "Protoss Gate Expand",
+   "tag": "1v1",
+   "hit": "7:00",
+   "summary": "Protoss 1v1, all matchups: Gateway expand, Robo, 3rd Nexus, 6 Gates. Probes and Pylons nonstop. UNVERIFIED on Liquipedia (rate-limited 2026-10-30): standard-knowledge timings. Fallback for 2v2 / unknown matchups; 1v1 uses PT/PZ/PP (researched 2026-10-30).",
+   "title": "Gate expand into Robo, 3 Nexus (PvX)",
+   "steps": [
+    {
+     "sec": 0,
+     "t": "0:00",
+     "supply": 12,
+     "action": "Probes nonstop",
+     "note": "Chrono Boost the Nexus on Probes now and whenever it has 50 energy until the 2nd Nexus is saturated."
+    },
+    {
+     "sec": 18,
+     "t": "0:18",
+     "supply": 14,
+     "action": "Pylon",
+     "note": "Toward the top of your main ramp."
+    },
+    {
+     "sec": 40,
+     "t": "0:40",
+     "supply": 16,
+     "action": "Gateway",
+     "note": "Wall the ramp with the Pylon. Scout with this Probe if you want, or just keep it mining."
+    },
+    {
+     "sec": 48,
+     "t": "0:48",
+     "supply": 17,
+     "action": "Assimilator",
+     "note": "3 Probes in when it finishes."
+    },
+    {
+     "sec": 85,
+     "t": "1:25",
+     "supply": 20,
+     "action": "Nexus",
+     "note": "At your natural."
+    },
+    {
+     "sec": 95,
+     "t": "1:35",
+     "supply": 20,
+     "action": "Cybernetics Core",
+     "note": "As soon as the Gateway finishes."
+    },
+    {
+     "sec": 100,
+     "t": "1:40",
+     "supply": 21,
+     "action": "Assimilator",
+     "note": "2nd gas."
+    },
+    {
+     "sec": 115,
+     "t": "1:55",
+     "supply": 22,
+     "action": "Pylon",
+     "note": ""
+    },
+    {
+     "sec": 135,
+     "t": "2:15",
+     "supply": 23,
+     "action": "Stalker + Warp Gate",
+     "note": "The moment the Core finishes: one Stalker (or Adept), research Warp Gate, chrono it."
+    },
+    {
+     "sec": 160,
+     "t": "2:40",
+     "supply": 27,
+     "action": "Robotics Facility",
+     "note": "Observer first, then Immortals nonstop."
+    },
+    {
+     "sec": 170,
+     "t": "2:50",
+     "supply": 28,
+     "action": "Pylon",
+     "note": "From here on, one Pylon every time you hit about 6 below the cap."
+    },
+    {
+     "sec": 180,
+     "t": "3:00",
+     "supply": 30,
+     "action": "Assimilator x2",
+     "note": "3rd and 4th gas."
+    },
+    {
+     "sec": 210,
+     "t": "3:30",
+     "supply": 34,
+     "action": "Gateway x2",
+     "note": "3 Gateways total. Warp in units every cycle."
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": 40,
+     "action": "Forge",
+     "note": "+1 Weapons when it finishes."
+    },
+    {
+     "sec": 255,
+     "t": "4:15",
+     "supply": 44,
+     "action": "Nexus",
+     "note": "3rd base."
+    },
+    {
+     "sec": 270,
+     "t": "4:30",
+     "supply": 48,
+     "action": "Twilight Council",
+     "note": "Blink vs Terran/Protoss, Charge vs Zerg."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": 56,
+     "action": "Check: 44 Probes",
+     "note": "Supply checkpoint."
+    },
+    {
+     "sec": 315,
+     "t": "5:15",
+     "supply": 60,
+     "action": "Gateway x3",
+     "note": "6 Gateways total. Pylons 2 at a time now."
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": 72,
+     "action": "Check: army + 2 Pylons",
+     "note": "Supply checkpoint."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": 90,
+     "action": "Check: move out",
+     "note": "Upgrades running; attack or take map control."
+    }
+   ]
+  },
+  "PT": {
+   "name": "PvT Blink into Robo",
+   "tag": "1v1",
+   "hit": "6:30",
+   "title": "PvT: 1-Gate Expand, Blink Stalkers, Robo, 3rd Nexus",
+   "summary": "Nexus-before-Core opener (ShoWTimE, Apr 2026), Twilight Blink at about 2:40 for safety against Reaper, Widow Mine and Banshee, then Robo (Observer) and a 3rd Nexus near 4:00. Colossus tech by about 6:30. Timings to 3:21 come from a pro replay; after that they are adapted from Harstem and Trazati. Lower-league checkpoint targets are given; GM values in notes.",
+   "steps": [
+    {
+     "sec": 0,
+     "t": "0:00",
+     "supply": 12,
+     "action": "Probe",
+     "note": "Chrono probes. Never stop probes until about 66 on 3 bases."
+    },
+    {
+     "sec": 17,
+     "t": "0:17",
+     "supply": 14,
+     "action": "Pylon",
+     "note": "Main, toward the ramp."
+    },
+    {
+     "sec": 37,
+     "t": "0:37",
+     "supply": 16,
+     "action": "Gateway",
+     "note": "Chrono probes. Send this probe to scout: count Barracks/gas, look for a missing SCV (proxy)."
+    },
+    {
+     "sec": 47,
+     "t": "0:47",
+     "supply": 17,
+     "action": "Assimilator",
+     "note": "Keep 16 probes on minerals."
+    },
+    {
+     "sec": 84,
+     "t": "1:24",
+     "supply": 20,
+     "action": "Nexus",
+     "note": "Natural."
+    },
+    {
+     "sec": 93,
+     "t": "1:33",
+     "supply": 20,
+     "action": "Cybernetics Core",
+     "note": "Reaper arrives about now: pull probes away, do not chase."
+    },
+    {
+     "sec": 105,
+     "t": "1:45",
+     "supply": 21,
+     "action": "Assimilator",
+     "note": "2nd gas."
+    },
+    {
+     "sec": 113,
+     "t": "1:53",
+     "supply": 22,
+     "action": "Pylon",
+     "note": "Low ground or natural."
+    },
+    {
+     "sec": 130,
+     "t": "2:10",
+     "supply": 23,
+     "action": "Warp Gate + Stalker",
+     "note": "Chrono the Stalker. It chases the Reaper off."
+    },
+    {
+     "sec": 149,
+     "t": "2:29",
+     "supply": 27,
+     "action": "Sentry (or 2nd Stalker)",
+     "note": "Sentry: hallucinated Phoenix scouts the main at about 3:00."
+    },
+    {
+     "sec": 162,
+     "t": "2:42",
+     "supply": 31,
+     "action": "Twilight Council",
+     "note": "For Blink. A Shield Battery at the natural is fine here too."
+    },
+    {
+     "sec": 171,
+     "t": "2:51",
+     "supply": 33,
+     "action": "Stalker",
+     "note": "Chrono probes."
+    },
+    {
+     "sec": 180,
+     "t": "3:00",
+     "supply": 36,
+     "action": "Check: ~36 supply",
+     "note": "GM replays show 37 here. If you are below 33, look for missed probes or chrono."
+    },
+    {
+     "sec": 182,
+     "t": "3:02",
+     "supply": 37,
+     "action": "Gateway",
+     "note": "2nd gate."
+    },
+    {
+     "sec": 190,
+     "t": "3:10",
+     "supply": 38,
+     "action": "Gateway",
+     "note": "3rd gate."
+    },
+    {
+     "sec": 201,
+     "t": "3:21",
+     "supply": 40,
+     "action": "Blink",
+     "note": "Chrono Twilight."
+    },
+    {
+     "sec": 205,
+     "t": "3:25",
+     "supply": 40,
+     "action": "Pylon",
+     "note": "Do not get supply blocked: one pylon about every 20s from here."
+    },
+    {
+     "sec": 230,
+     "t": "3:50",
+     "supply": 44,
+     "action": "Nexus",
+     "note": "3rd base (Harstem 3:42). Delay to 4:30 if you saw 3 Rax with no CC."
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": 46,
+     "action": "Pylon + Stalker",
+     "note": "Widow Mine/Hellion drops start at about 4:00: keep 1-2 Stalkers at home, Battery in the main mineral line."
+    },
+    {
+     "sec": 256,
+     "t": "4:16",
+     "supply": 50,
+     "action": "Robotics Facility",
+     "note": "Harstem 4:16."
+    },
+    {
+     "sec": 264,
+     "t": "4:24",
+     "supply": 52,
+     "action": "Assimilator x2",
+     "note": "Natural gases."
+    },
+    {
+     "sec": 285,
+     "t": "4:45",
+     "supply": 56,
+     "action": "Observer",
+     "note": "Chrono. Detects Widow Mines and Banshee cloak. Send it toward their 3rd."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": 60,
+     "action": "Check: ~60 supply",
+     "note": "GM about 69-73. Three Nexus, 4 gas, 3 gates, Blink done."
+    },
+    {
+     "sec": 315,
+     "t": "5:15",
+     "supply": 63,
+     "action": "Gateway x2",
+     "note": "5 gates. Warp Stalkers in every round."
+    },
+    {
+     "sec": 330,
+     "t": "5:30",
+     "supply": 66,
+     "action": "Robotics Bay",
+     "note": "For Colossus. Warp Prism first if you want harass (Trazati)."
+    },
+    {
+     "sec": 345,
+     "t": "5:45",
+     "supply": 70,
+     "action": "Forge",
+     "note": "Harstem 6:05."
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": 75,
+     "action": "Check: ~75 supply",
+     "note": "GM about 92. Probe count should be about 55-60."
+    },
+    {
+     "sec": 375,
+     "t": "6:15",
+     "supply": 78,
+     "action": "Ground Weapons L1 + Pylon x2",
+     "note": "Chrono Forge."
+    },
+    {
+     "sec": 390,
+     "t": "6:30",
+     "supply": 82,
+     "action": "Colossus",
+     "note": "Chrono. Extended Thermal Lance next. Stalker/Colossus is ready to defend a bio push."
+    },
+    {
+     "sec": 405,
+     "t": "6:45",
+     "supply": 86,
+     "action": "Assimilator x2",
+     "note": "3rd base gases."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": 92,
+     "action": "Check: ~92 supply",
+     "note": "GM about 128 (Harstem). About 66 probes on 3 bases is the goal."
+    }
+   ]
+  },
+  "PZ": {
+   "name": "PvZ Stalker-Immortal Macro",
+   "tag": "1v1",
+   "hit": "5:00",
+   "title": "PvZ: Walled Gateway Expand, Robo Stalker/Immortal, Fast 3rd",
+   "summary": "ViBE B2GM-style easy macro build (Spawning Tool, Easy). Gateway/Core wall at the natural with a Shield Battery, Robo before 2:50, Immortals with chrono, 3rd Nexus about 4:00, then Twilight and double Forge. Holds Roach and Ling/Bane aggression without needing Oracle micro. Swap Robo for a Stargate at 2:24 (ShoWTimE opener) once you are comfortable.",
+   "steps": [
+    {
+     "sec": 0,
+     "t": "0:00",
+     "supply": 12,
+     "action": "Probe",
+     "note": "Chrono probes."
+    },
+    {
+     "sec": 18,
+     "t": "0:18",
+     "supply": 14,
+     "action": "Pylon",
+     "note": "At the natural, wall position. Send a probe to scout at about 0:20."
+    },
+    {
+     "sec": 40,
+     "t": "0:40",
+     "supply": 15,
+     "action": "Gateway",
+     "note": "Natural wall. Chrono probes. Scout: pool before hatch? Hatch at their natural by about 1:00?"
+    },
+    {
+     "sec": 53,
+     "t": "0:53",
+     "supply": 17,
+     "action": "Assimilator",
+     "note": "Chrono probes."
+    },
+    {
+     "sec": 84,
+     "t": "1:24",
+     "supply": 20,
+     "action": "Nexus",
+     "note": "Skip/delay if you saw pool-first and no hatch (ling rush): Core + Zealot first."
+    },
+    {
+     "sec": 98,
+     "t": "1:38",
+     "supply": 21,
+     "action": "Cybernetics Core",
+     "note": "In the wall, leaving a 1-unit gap (Zealot holds the gap)."
+    },
+    {
+     "sec": 110,
+     "t": "1:50",
+     "supply": 22,
+     "action": "Pylon",
+     "note": "Main."
+    },
+    {
+     "sec": 121,
+     "t": "2:01",
+     "supply": 23,
+     "action": "Assimilator",
+     "note": "2nd gas."
+    },
+    {
+     "sec": 146,
+     "t": "2:26",
+     "supply": 25,
+     "action": "Stalker + Warp Gate",
+     "note": "Stalker kills the overlord scout; chrono probes."
+    },
+    {
+     "sec": 166,
+     "t": "2:46",
+     "supply": 30,
+     "action": "Robotics Facility",
+     "note": "Main."
+    },
+    {
+     "sec": 168,
+     "t": "2:48",
+     "supply": 30,
+     "action": "Shield Battery",
+     "note": "Behind the natural wall. Starts with 100 energy near a Nexus (5.0.17)."
+    },
+    {
+     "sec": 175,
+     "t": "2:55",
+     "supply": 32,
+     "action": "Stalker",
+     "note": ""
+    },
+    {
+     "sec": 180,
+     "t": "3:00",
+     "supply": 34,
+     "action": "Check: ~34 supply",
+     "note": "ViBE: 32 at 2:55, 37 at 3:08."
+    },
+    {
+     "sec": 188,
+     "t": "3:08",
+     "supply": 37,
+     "action": "Pylon",
+     "note": ""
+    },
+    {
+     "sec": 203,
+     "t": "3:23",
+     "supply": 39,
+     "action": "Pylon + Stalker",
+     "note": ""
+    },
+    {
+     "sec": 215,
+     "t": "3:35",
+     "supply": 44,
+     "action": "Immortal",
+     "note": "Chrono. Add 1 Observer after it to scout their tech (Roach Warren, Lair, Baneling Nest)."
+    },
+    {
+     "sec": 242,
+     "t": "4:02",
+     "supply": 50,
+     "action": "Nexus",
+     "note": "3rd base. Delay if Observer shows Roach Warren + few drones (all-in)."
+    },
+    {
+     "sec": 245,
+     "t": "4:05",
+     "supply": 51,
+     "action": "Pylon + Stalker",
+     "note": ""
+    },
+    {
+     "sec": 258,
+     "t": "4:18",
+     "supply": 54,
+     "action": "Immortal",
+     "note": "Chrono."
+    },
+    {
+     "sec": 261,
+     "t": "4:21",
+     "supply": 55,
+     "action": "Assimilator x2",
+     "note": "Natural gases."
+    },
+    {
+     "sec": 270,
+     "t": "4:30",
+     "supply": 57,
+     "action": "Stalker",
+     "note": ""
+    },
+    {
+     "sec": 293,
+     "t": "4:53",
+     "supply": 61,
+     "action": "Gateway x2",
+     "note": "3 gates."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": 62,
+     "action": "Check: ~62 supply + Immortal",
+     "note": "GM about 73. Roach timings hit around 4:30-5:30: Battery + Immortals at the natural."
+    },
+    {
+     "sec": 320,
+     "t": "5:20",
+     "supply": 66,
+     "action": "Stalker",
+     "note": ""
+    },
+    {
+     "sec": 345,
+     "t": "5:45",
+     "supply": 72,
+     "action": "Stalker x3",
+     "note": "Warp-in round."
+    },
+    {
+     "sec": 349,
+     "t": "5:49",
+     "supply": 74,
+     "action": "Immortal",
+     "note": "Chrono."
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": 78,
+     "action": "Check: ~78 supply",
+     "note": "GM about 88-90. 3 Nexus, 4 gas, 3 gates, Robo."
+    },
+    {
+     "sec": 375,
+     "t": "6:15",
+     "supply": 80,
+     "action": "Twilight Council",
+     "note": "ViBE takes a 4th Nexus here; skip it until you are comfortable."
+    },
+    {
+     "sec": 383,
+     "t": "6:23",
+     "supply": 82,
+     "action": "Forge x2",
+     "note": ""
+    },
+    {
+     "sec": 391,
+     "t": "6:31",
+     "supply": 84,
+     "action": "Assimilator x2",
+     "note": "3rd base gases."
+    },
+    {
+     "sec": 400,
+     "t": "6:40",
+     "supply": 86,
+     "action": "Immortal + Pylon x2",
+     "note": "Chrono."
+    },
+    {
+     "sec": 419,
+     "t": "6:59",
+     "supply": 90,
+     "action": "Ground Weapons L1 + Ground Armor L1",
+     "note": "Chrono both. Charge/Templar Archives next."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": 92,
+     "action": "Check: ~92 supply",
+     "note": "GM about 117."
+    }
+   ]
+  },
+  "PP": {
+   "name": "PvP Robo Stalker-Immortal",
+   "tag": "1v1",
+   "hit": "4:30",
+   "title": "PvP: Gateway Expand, Robo, Batteries, Stalker/Immortal",
+   "summary": "ViBE B2GM-style easy PvP macro build (Spawning Tool, Easy). Nexus before Core, Robo at about 2:34, Shield Battery at the natural, chrono Immortals, 3rd Nexus about 4:00 once the Observer shows no all-in. Safe against Stalker pressure, DTs (Observer), and Oracle (Stalkers + Battery).",
+   "steps": [
+    {
+     "sec": 0,
+     "t": "0:00",
+     "supply": 12,
+     "action": "Probe",
+     "note": "Chrono probes."
+    },
+    {
+     "sec": 18,
+     "t": "0:18",
+     "supply": 14,
+     "action": "Pylon",
+     "note": "Main."
+    },
+    {
+     "sec": 38,
+     "t": "0:38",
+     "supply": 15,
+     "action": "Gateway",
+     "note": "Chrono probes. Scout with a probe after this: look for gas count and their Gateway (no Gateway in main = proxy)."
+    },
+    {
+     "sec": 58,
+     "t": "0:58",
+     "supply": 18,
+     "action": "Assimilator",
+     "note": ""
+    },
+    {
+     "sec": 83,
+     "t": "1:23",
+     "supply": 20,
+     "action": "Nexus",
+     "note": "Natural."
+    },
+    {
+     "sec": 94,
+     "t": "1:34",
+     "supply": 21,
+     "action": "Cybernetics Core",
+     "note": ""
+    },
+    {
+     "sec": 104,
+     "t": "1:44",
+     "supply": 22,
+     "action": "Pylon",
+     "note": ""
+    },
+    {
+     "sec": 113,
+     "t": "1:53",
+     "supply": 22,
+     "action": "Assimilator",
+     "note": "2nd gas."
+    },
+    {
+     "sec": 131,
+     "t": "2:11",
+     "supply": 24,
+     "action": "Stalker + Warp Gate",
+     "note": "Chrono Stalker."
+    },
+    {
+     "sec": 147,
+     "t": "2:27",
+     "supply": 28,
+     "action": "Pylon",
+     "note": ""
+    },
+    {
+     "sec": 154,
+     "t": "2:34",
+     "supply": 29,
+     "action": "Robotics Facility",
+     "note": "Main."
+    },
+    {
+     "sec": 163,
+     "t": "2:43",
+     "supply": 30,
+     "action": "Stalker",
+     "note": ""
+    },
+    {
+     "sec": 176,
+     "t": "2:56",
+     "supply": 34,
+     "action": "Shield Battery",
+     "note": "Natural. 100 starting energy near a Nexus (5.0.17)."
+    },
+    {
+     "sec": 180,
+     "t": "3:00",
+     "supply": 35,
+     "action": "Check: ~35 supply",
+     "note": "ViBE: 34 at 2:56, 39 at 3:13."
+    },
+    {
+     "sec": 193,
+     "t": "3:13",
+     "supply": 39,
+     "action": "Stalker + Observer",
+     "note": "Observer to their main: Twilight (DTs/Blink), Stargate, or Robo?"
+    },
+    {
+     "sec": 198,
+     "t": "3:18",
+     "supply": 40,
+     "action": "Pylon",
+     "note": ""
+    },
+    {
+     "sec": 210,
+     "t": "3:30",
+     "supply": 44,
+     "action": "Immortal",
+     "note": "Chrono."
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": 50,
+     "action": "Nexus",
+     "note": "3rd base (ViBE 3:50). Only if the Observer saw a normal 2-base build; otherwise make Batteries and units, take it at about 5:00."
+    },
+    {
+     "sec": 245,
+     "t": "4:05",
+     "supply": 51,
+     "action": "Pylon + Stalker",
+     "note": ""
+    },
+    {
+     "sec": 254,
+     "t": "4:14",
+     "supply": 54,
+     "action": "Immortal",
+     "note": "Chrono."
+    },
+    {
+     "sec": 270,
+     "t": "4:30",
+     "supply": 58,
+     "action": "Assimilator x2",
+     "note": "Natural gases."
+    },
+    {
+     "sec": 273,
+     "t": "4:33",
+     "supply": 59,
+     "action": "Stalker",
+     "note": ""
+    },
+    {
+     "sec": 291,
+     "t": "4:51",
+     "supply": 62,
+     "action": "Immortal",
+     "note": "Chrono."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": 63,
+     "action": "Check: ~63 supply",
+     "note": "GM about 73-76."
+    },
+    {
+     "sec": 318,
+     "t": "5:18",
+     "supply": 66,
+     "action": "Gateway x2",
+     "note": "3 gates."
+    },
+    {
+     "sec": 328,
+     "t": "5:28",
+     "supply": 70,
+     "action": "Stalker x2 + Pylon",
+     "note": ""
+    },
+    {
+     "sec": 353,
+     "t": "5:53",
+     "supply": 75,
+     "action": "Immortal",
+     "note": "Chrono. ViBE takes a 4th Nexus at 5:45; skip it for now."
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": 77,
+     "action": "Check: ~77 supply",
+     "note": "GM about 102."
+    },
+    {
+     "sec": 380,
+     "t": "6:20",
+     "supply": 80,
+     "action": "Assimilator x2",
+     "note": "3rd base gases."
+    },
+    {
+     "sec": 393,
+     "t": "6:33",
+     "supply": 84,
+     "action": "Twilight Council + Forge",
+     "note": "Charge or Blink next; Forge for +1."
+    },
+    {
+     "sec": 411,
+     "t": "6:51",
+     "supply": 88,
+     "action": "Immortal",
+     "note": "Chrono."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": 90,
+     "action": "Check: ~90 supply",
+     "note": "GM about 137. Gateway x3 next."
+    }
+   ]
+  }
+ }
+}

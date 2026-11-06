@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Fast pre-commit check: ruff, mypy, cargo fmt, page script, plans/focus JSON (no compiling, ~1 s).
+# Install once, from WSL at the repo root:  ln -sf ../../tools/hooks/pre-commit .git/hooks/pre-commit
+# Skip in an emergency with: git commit --no-verify
+exec bash "$(git rev-parse --show-toplevel)/ci.sh" --fast

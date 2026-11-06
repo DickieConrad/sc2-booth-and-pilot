@@ -1,0 +1,3 @@
+# Matches the Python side (ruff line-length 120) and the dense one-line style of the crates.
+max_width = 120
+use_small_heuristics = "Max"

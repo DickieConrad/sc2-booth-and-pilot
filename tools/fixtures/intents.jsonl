@@ -1,0 +1,81 @@
+{"text": "testing, one two three.", "intent": "chatter", "source": "synthetic"}
+{"text": "can you hear me okay?", "intent": "chatter", "source": "synthetic"}
+{"text": "mic check, is this thing on?", "intent": "chatter", "source": "synthetic"}
+{"text": "Okay, that game was rough. Let's look at what went wrong before the next one.", "intent": "chatter", "source": "synthetic"}
+{"text": "Which mouse button should I put push-to-talk on?", "intent": "chatter", "source": "synthetic"}
+{"text": "I think the volume is a bit loud, can we turn it down?", "intent": "chatter", "source": "synthetic"}
+{"text": "Good game. That was close.", "intent": "chatter", "source": "synthetic"}
+{"text": "Let me grab a drink and then we'll queue again.", "intent": "chatter", "source": "synthetic"}
+{"text": "Why did the overlay freeze for a second there?", "intent": "chatter", "source": "synthetic"}
+{"text": "Can we make the step lane font a little bigger?", "intent": "chatter", "source": "synthetic"}
+{"text": "I keep forgetting where the camera hotkeys are in the menu.", "intent": "chatter", "source": "synthetic"}
+{"text": "Remind me what the plan was for this map.", "intent": "chatter", "source": "synthetic"}
+{"text": "That last call came in late, I was already building the depot.", "intent": "chatter", "source": "synthetic"}
+{"text": "Should we run the helper natively instead?", "intent": "chatter", "source": "synthetic"}
+{"text": "Okay, the page is up on the second screen.", "intent": "chatter", "source": "synthetic"}
+{"text": "Nice, the voice sounds much better now.", "intent": "chatter", "source": "synthetic"}
+{"text": "I don't need the clock right now, I'm just in the menus.", "intent": "chatter", "source": "synthetic"}
+{"text": "Let's try the AI on hard this time.", "intent": "chatter", "source": "synthetic"}
+{"text": "What did the review say my one fix was?", "intent": "chatter", "source": "synthetic"}
+{"text": "I'm going to restart the client, give me a minute.", "intent": "chatter", "source": "synthetic"}
+{"text": "Is the database saving these games?", "intent": "chatter", "source": "synthetic"}
+{"text": "That was a weird map, I didn't like the ramp.", "intent": "chatter", "source": "synthetic"}
+{"text": "Okay, I'm ready when you are.", "intent": "chatter", "source": "synthetic"}
+{"text": "Can you read the last note back to me?", "intent": "chatter", "source": "synthetic"}
+{"text": "Hmm, the screenshot looks blurry on my side.", "intent": "chatter", "source": "synthetic"}
+{"text": "Let me check the settings real quick.", "intent": "chatter", "source": "synthetic"}
+{"text": "We won! The bunker held.", "intent": "chatter", "source": "synthetic"}
+{"text": "That one doesn't count, I left early to test something.", "intent": "chatter", "source": "synthetic"}
+{"text": "How long has the mic been running?", "intent": "chatter", "source": "synthetic"}
+{"text": "Thanks coach, that helped.", "intent": "chatter", "source": "synthetic"}
+{"text": "I'll play one more and then call it a night.", "intent": "chatter", "source": "synthetic"}
+{"text": "The panel numbers look right now.", "intent": "chatter", "source": "synthetic"}
+{"text": "Wait, was that my ally talking or the game?", "intent": "chatter", "source": "synthetic"}
+{"text": "Okay, I clicked the wrong button. Never mind.", "intent": "chatter", "source": "synthetic"}
+{"text": "Did the last game get the right plan letter?", "intent": "chatter", "source": "synthetic"}
+{"text": "Let's do a quick custom game to test the calls.", "intent": "chatter", "source": "synthetic"}
+{"text": "roach warren at their natural.", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "they're going proxy barracks.", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "I see stargate, probably oracles.", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "zergling flood, it's a pool first.", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "reaper coming in early.", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "What should I do now, they skipped the expansion?", "intent": "ask_build", "source": "synthetic"}
+{"text": "How should I open against two Zergs?", "intent": "ask_build", "source": "synthetic"}
+{"text": "Should I go tanks or more marines here?", "intent": "ask_build", "source": "synthetic"}
+{"text": "Is it time to take my third?", "intent": "ask_build", "source": "synthetic"}
+{"text": "What do I push with on this timing?", "intent": "ask_build", "source": "synthetic"}
+{"text": "Behind on the Factory.", "intent": "behind", "source": "synthetic"}
+{"text": "I'm late on my second gas.", "intent": "behind", "source": "synthetic"}
+{"text": "forgot to build an engineering bay.", "intent": "behind", "source": "synthetic"}
+{"text": "How do I counter Thors?", "intent": "counter_unit", "source": "synthetic"}
+{"text": "what beats lurkers?", "intent": "counter_unit", "source": "synthetic"}
+{"text": "how do I deal with colossus?", "intent": "counter_unit", "source": "synthetic"}
+{"text": "You can pause now.", "intent": "pause", "source": "synthetic"}
+{"text": "pause it for a second.", "intent": "pause", "source": "synthetic"}
+{"text": "Okay, resume.", "intent": "resume", "source": "synthetic"}
+{"text": "we're back, start it up.", "intent": "resume", "source": "synthetic"}
+{"text": "they're going roaches", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "proxy gate in the corner", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "double gas, they took both", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "I see a dark shrine", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "oracle in my main", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "lots of gateways, like four", "intent": "enemy_shows", "source": "synthetic"}
+{"text": "how do I beat tempests", "intent": "counter_unit", "source": "synthetic"}
+{"text": "what beats mass mutas", "intent": "counter_unit", "source": "synthetic"}
+{"text": "counter for carriers?", "intent": "counter_unit", "source": "synthetic"}
+{"text": "how do I deal with banelings", "intent": "counter_unit", "source": "synthetic"}
+{"text": "behind on depots", "intent": "behind", "source": "synthetic"}
+{"text": "I'm late on my factory", "intent": "behind", "source": "synthetic"}
+{"text": "forgot my orbital", "intent": "behind", "source": "synthetic"}
+{"text": "no starport yet, I'm behind", "intent": "behind", "source": "synthetic"}
+{"text": "should I take my third", "intent": "ask_build", "source": "synthetic"}
+{"text": "what do I build next", "intent": "ask_build", "source": "synthetic"}
+{"text": "do I add more barracks now", "intent": "ask_build", "source": "synthetic"}
+{"text": "what upgrades should I get", "intent": "ask_build", "source": "synthetic"}
+{"text": "pause", "intent": "pause", "source": "synthetic"}
+{"text": "hold on, stop the clock", "intent": "pause", "source": "synthetic"}
+{"text": "wait wait, pause the calls", "intent": "pause", "source": "synthetic"}
+{"text": "ok go again", "intent": "resume", "source": "synthetic"}
+{"text": "resume", "intent": "resume", "source": "synthetic"}
+{"text": "unpause, we're back", "intent": "resume", "source": "synthetic"}
+{"text": "start the clock again", "intent": "resume", "source": "synthetic"}

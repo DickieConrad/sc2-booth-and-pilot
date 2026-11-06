@@ -1,0 +1,22 @@
+# Python lint config (run: .tools/py/bin/ruff check . ; installed by tools/dev-setup.sh)
+line-length = 120
+target-version = "py312"
+extend-exclude = [
+    ".rust", ".tools", ".uv-cache",
+    "live/.pkgs", "live/.python", "live/.venv", "live/.uv-cache", "live/.models",
+    "live/out", "live/voice/out", "live/voice/.uv-cache",
+    "**/target",
+    "live/web/node_modules", "live/web/dist", "live/web/.angular",
+    "bot/.pkgs", "bot/out",
+]
+
+[lint]
+select = ["E", "F", "W", "I", "B"]
+ignore = [
+    "E701", "E702", # one-line if/; statements are part of the house style
+    "E731",         # lambda assignment
+    "B905",         # zip() without strict=: the zips here pair same-length lists by construction
+]
+
+[format]
+quote-style = "preserve"

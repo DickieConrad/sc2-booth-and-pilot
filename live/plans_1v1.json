@@ -1,0 +1,857 @@
+{
+ "plans": {
+  "Z": {
+   "name": "TvZ Field Manual",
+   "tag": "1v1",
+   "hit": "6:30",
+   "summary": "1v1: Reaper expand into Factory and Starport, 3 CC bio. Supply is the trigger before 3:00, the clock after. Checkpoint rows are SCV targets.",
+   "title": "Reaper expand, 3 CC bio (TvZ)",
+   "steps": [
+    {
+     "sec": 0,
+     "t": "0:00",
+     "supply": 12,
+     "action": "SCVs nonstop",
+     "note": "Keep every Command Center busy until about 66. Queue one or two, never five."
+    },
+    {
+     "sec": 17,
+     "t": "0:17",
+     "supply": 14,
+     "action": "Supply Depot",
+     "note": "Top of your main ramp."
+    },
+    {
+     "sec": 40,
+     "t": "0:40",
+     "supply": 16,
+     "action": "Barracks",
+     "note": "Next to the depot so the two wall your ramp."
+    },
+    {
+     "sec": 45,
+     "t": "0:45",
+     "supply": 16,
+     "action": "Refinery",
+     "note": "Send 3 SCVs the moment it finishes."
+    },
+    {
+     "sec": 87,
+     "t": "1:27",
+     "supply": 19,
+     "action": "Orbital Command + Reaper",
+     "note": "Both the moment the Barracks finishes. The Reaper scouts their natural and tech. Keep it alive."
+    },
+    {
+     "sec": 100,
+     "t": "1:40",
+     "supply": 20,
+     "action": "Command Center",
+     "note": "At your natural expansion."
+    },
+    {
+     "sec": 111,
+     "t": "1:51",
+     "supply": 20,
+     "action": "Supply Depot",
+     "note": ""
+    },
+    {
+     "sec": 120,
+     "t": "2:00",
+     "supply": 21,
+     "action": "Marine",
+     "note": "One Marine while you save for the Factory."
+    },
+    {
+     "sec": 132,
+     "t": "2:12",
+     "supply": 22,
+     "action": "Factory",
+     "note": ""
+    },
+    {
+     "sec": 142,
+     "t": "2:22",
+     "supply": 23,
+     "action": "Reactor on Barracks",
+     "note": "Finishes at 2:58."
+    },
+    {
+     "sec": 146,
+     "t": "2:26",
+     "supply": 24,
+     "action": "Refinery",
+     "note": "Second gas, 3 SCVs."
+    },
+    {
+     "sec": 174,
+     "t": "2:54",
+     "supply": 26,
+     "action": "Orbital Command (natural)",
+     "note": "As soon as the natural CC finishes."
+    },
+    {
+     "sec": 176,
+     "t": "2:56",
+     "supply": null,
+     "action": "Hellion ×2",
+     "note": "Clear Zerglings at home, then scout their third and kill drones."
+    },
+    {
+     "sec": 178,
+     "t": "2:58",
+     "supply": 26,
+     "action": "Starport",
+     "note": "As soon as the Factory finishes."
+    },
+    {
+     "sec": 180,
+     "t": "3:00",
+     "supply": null,
+     "action": "Marines, two at a time",
+     "note": "Reactor is done. The Barracks never sits idle from here."
+    },
+    {
+     "sec": 190,
+     "t": "3:10",
+     "supply": null,
+     "action": "Supply Depot",
+     "note": "From now on, one every 25–30 seconds."
+    },
+    {
+     "sec": 214,
+     "t": "3:34",
+     "supply": null,
+     "action": "Medivac",
+     "note": "Starport is done. One Medivac, then a Reactor."
+    },
+    {
+     "sec": 220,
+     "t": "3:40",
+     "supply": null,
+     "action": "Command Center #3",
+     "note": "Build it in your main. You'll fly it to the third."
+    },
+    {
+     "sec": 220,
+     "t": "3:40",
+     "supply": null,
+     "action": "Widow Mines",
+     "note": "Factory makes Mines from now. One at each mineral line vs Mutalisks and runbys."
+    },
+    {
+     "sec": 230,
+     "t": "3:50",
+     "supply": null,
+     "action": "Supply Depot",
+     "note": ""
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": null,
+     "action": "Barracks ×2",
+     "note": "Three Barracks total."
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": null,
+     "action": "Check: ≈32 SCVs",
+     "note": "Learning target. Count it in the replay afterwards."
+    },
+    {
+     "sec": 244,
+     "t": "4:04",
+     "supply": null,
+     "action": "Reactor on Starport",
+     "note": "Two Medivacs (or Vikings) at a time."
+    },
+    {
+     "sec": 250,
+     "t": "4:10",
+     "supply": null,
+     "action": "Engineering Bay ×2",
+     "note": "One for weapons, one for armor."
+    },
+    {
+     "sec": 260,
+     "t": "4:20",
+     "supply": null,
+     "action": "Refinery ×2",
+     "note": "Four gases total."
+    },
+    {
+     "sec": 275,
+     "t": "4:35",
+     "supply": null,
+     "action": "+1 Weapons and +1 Armor",
+     "note": "Group 7 from now. Keep both Engineering Bays busy."
+    },
+    {
+     "sec": 286,
+     "t": "4:46",
+     "supply": null,
+     "action": "Tech Lab + Reactor on new Barracks",
+     "note": "Tech Lab on Barracks 2 for Stim. Reactor on Barracks 3."
+    },
+    {
+     "sec": 291,
+     "t": "4:51",
+     "supply": null,
+     "action": "Orbital Command (third)",
+     "note": "Upgrade it, then lift (L) and land at your third."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": null,
+     "action": "Check: ≈42 SCVs",
+     "note": ""
+    },
+    {
+     "sec": 304,
+     "t": "5:04",
+     "supply": null,
+     "action": "Stimpack",
+     "note": "Barracks Tech Lab. Takes 100 s, done around 6:44."
+    },
+    {
+     "sec": 310,
+     "t": "5:10",
+     "supply": null,
+     "action": "Barracks ×2",
+     "note": "Five Barracks total."
+    },
+    {
+     "sec": 315,
+     "t": "5:15",
+     "supply": null,
+     "action": "Supply Depot ×2",
+     "note": "Production now outruns single depots. Build two at a time."
+    },
+    {
+     "sec": 330,
+     "t": "5:30",
+     "supply": null,
+     "action": "Medivacs, two at a time",
+     "note": ""
+    },
+    {
+     "sec": 356,
+     "t": "5:56",
+     "supply": null,
+     "action": "Tech Lab + Reactor on Barracks 4 and 5",
+     "note": ""
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": null,
+     "action": "Check: ≈55 SCVs",
+     "note": ""
+    },
+    {
+     "sec": 374,
+     "t": "6:14",
+     "supply": null,
+     "action": "Combat Shield",
+     "note": "On the second Tech Lab. +10 Marine HP."
+    },
+    {
+     "sec": 380,
+     "t": "6:20",
+     "supply": null,
+     "action": "Armory",
+     "note": "Unlocks +2 infantry upgrades."
+    },
+    {
+     "sec": 390,
+     "t": "6:30",
+     "supply": null,
+     "action": "Refinery ×2",
+     "note": "Gas at the third."
+    },
+    {
+     "sec": 404,
+     "t": "6:44",
+     "supply": null,
+     "action": "Stim done: move out",
+     "note": "Push with Stim, +1/+1 and 4+ Medivacs. Keep macroing while the army walks."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": null,
+     "action": "Check: ≈66 SCVs, stop here",
+     "note": "Stop SCVs at about 66–70."
+    },
+    {
+     "sec": 426,
+     "t": "7:06",
+     "supply": null,
+     "action": "+2 Infantry Weapons",
+     "note": "Armory is done."
+    }
+   ]
+  },
+  "P": {
+   "name": "TvP Field Manual",
+   "tag": "1v1",
+   "hit": "6:30",
+   "summary": "1v1: Reaper expand into Factory and Starport, 3 CC bio. Supply is the trigger before 3:00, the clock after. Checkpoint rows are SCV targets.",
+   "title": "Reaper expand, 3 CC bio (TvP)",
+   "steps": [
+    {
+     "sec": 0,
+     "t": "0:00",
+     "supply": 12,
+     "action": "SCVs nonstop",
+     "note": "Keep every Command Center busy until about 66. Queue one or two, never five."
+    },
+    {
+     "sec": 17,
+     "t": "0:17",
+     "supply": 14,
+     "action": "Supply Depot",
+     "note": "Top of your main ramp."
+    },
+    {
+     "sec": 40,
+     "t": "0:40",
+     "supply": 16,
+     "action": "Barracks",
+     "note": "Next to the depot so the two wall your ramp."
+    },
+    {
+     "sec": 45,
+     "t": "0:45",
+     "supply": 16,
+     "action": "Refinery",
+     "note": "Send 3 SCVs the moment it finishes."
+    },
+    {
+     "sec": 87,
+     "t": "1:27",
+     "supply": 19,
+     "action": "Orbital Command + Reaper",
+     "note": "Both the moment the Barracks finishes. The Reaper scouts their natural and tech. Keep it alive."
+    },
+    {
+     "sec": 100,
+     "t": "1:40",
+     "supply": 20,
+     "action": "Command Center",
+     "note": "At your natural expansion."
+    },
+    {
+     "sec": 111,
+     "t": "1:51",
+     "supply": 20,
+     "action": "Supply Depot",
+     "note": ""
+    },
+    {
+     "sec": 120,
+     "t": "2:00",
+     "supply": 21,
+     "action": "Marine",
+     "note": "One Marine while you save for the Factory."
+    },
+    {
+     "sec": 132,
+     "t": "2:12",
+     "supply": 22,
+     "action": "Factory",
+     "note": ""
+    },
+    {
+     "sec": 142,
+     "t": "2:22",
+     "supply": 23,
+     "action": "Reactor on Barracks",
+     "note": "Finishes at 2:58."
+    },
+    {
+     "sec": 146,
+     "t": "2:26",
+     "supply": 24,
+     "action": "Refinery",
+     "note": "Second gas, 3 SCVs."
+    },
+    {
+     "sec": 174,
+     "t": "2:54",
+     "supply": 26,
+     "action": "Orbital Command (natural)",
+     "note": "As soon as the natural CC finishes."
+    },
+    {
+     "sec": 176,
+     "t": "2:56",
+     "supply": null,
+     "action": "Widow Mine ×2",
+     "note": "Burrow one in each mineral line against Oracle or Adept harass."
+    },
+    {
+     "sec": 178,
+     "t": "2:58",
+     "supply": 26,
+     "action": "Starport",
+     "note": "As soon as the Factory finishes."
+    },
+    {
+     "sec": 180,
+     "t": "3:00",
+     "supply": null,
+     "action": "Marines, two at a time",
+     "note": "Reactor is done. The Barracks never sits idle from here."
+    },
+    {
+     "sec": 190,
+     "t": "3:10",
+     "supply": null,
+     "action": "Supply Depot",
+     "note": "From now on, one every 25–30 seconds."
+    },
+    {
+     "sec": 214,
+     "t": "3:34",
+     "supply": null,
+     "action": "Medivac",
+     "note": "Starport is done. One Medivac, then a Reactor."
+    },
+    {
+     "sec": 225,
+     "t": "3:45",
+     "supply": null,
+     "action": "Command Center #3",
+     "note": "Build it in your main. You'll fly it to the third."
+    },
+    {
+     "sec": 230,
+     "t": "3:50",
+     "supply": null,
+     "action": "Supply Depot",
+     "note": ""
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": null,
+     "action": "Barracks ×2",
+     "note": "Three Barracks total."
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": null,
+     "action": "Check: ≈32 SCVs",
+     "note": "Learning target. Count it in the replay afterwards."
+    },
+    {
+     "sec": 244,
+     "t": "4:04",
+     "supply": null,
+     "action": "Reactor on Starport",
+     "note": "Two Medivacs (or Vikings) at a time."
+    },
+    {
+     "sec": 250,
+     "t": "4:10",
+     "supply": null,
+     "action": "Engineering Bay",
+     "note": ""
+    },
+    {
+     "sec": 260,
+     "t": "4:20",
+     "supply": null,
+     "action": "Refinery ×2",
+     "note": "Four gases total."
+    },
+    {
+     "sec": 275,
+     "t": "4:35",
+     "supply": null,
+     "action": "+1 Infantry Weapons",
+     "note": ""
+    },
+    {
+     "sec": 280,
+     "t": "4:40",
+     "supply": null,
+     "action": "Missile Turrets, if needed",
+     "note": "Saw a Stargate or Dark Shrine? One turret in each mineral line."
+    },
+    {
+     "sec": 286,
+     "t": "4:46",
+     "supply": null,
+     "action": "Tech Lab ×2 on new Barracks",
+     "note": "Marauders handle Stalkers. You want two Tech Labs."
+    },
+    {
+     "sec": 296,
+     "t": "4:56",
+     "supply": null,
+     "action": "Orbital Command (third)",
+     "note": "Upgrade it, then lift (L) and land at your third."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": null,
+     "action": "Check: ≈42 SCVs",
+     "note": ""
+    },
+    {
+     "sec": 304,
+     "t": "5:04",
+     "supply": null,
+     "action": "Stimpack",
+     "note": "Barracks Tech Lab. Takes 100 s, done around 6:44."
+    },
+    {
+     "sec": 306,
+     "t": "5:06",
+     "supply": null,
+     "action": "Marauders",
+     "note": "Mix them in from the Tech Lab Barracks from now."
+    },
+    {
+     "sec": 310,
+     "t": "5:10",
+     "supply": null,
+     "action": "Barracks ×2",
+     "note": "Five Barracks total."
+    },
+    {
+     "sec": 310,
+     "t": "5:10",
+     "supply": null,
+     "action": "Concussive Shells",
+     "note": "Second Tech Lab. Slows whatever Marauders hit."
+    },
+    {
+     "sec": 315,
+     "t": "5:15",
+     "supply": null,
+     "action": "Supply Depot ×2",
+     "note": "Production now outruns single depots. Build two at a time."
+    },
+    {
+     "sec": 356,
+     "t": "5:56",
+     "supply": null,
+     "action": "Reactors on Barracks 4 and 5",
+     "note": ""
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": null,
+     "action": "Check: ≈54 SCVs",
+     "note": ""
+    },
+    {
+     "sec": 365,
+     "t": "6:05",
+     "supply": null,
+     "action": "Combat Shield",
+     "note": "On the second Tech Lab, after Concussive."
+    },
+    {
+     "sec": 380,
+     "t": "6:20",
+     "supply": null,
+     "action": "Armory",
+     "note": "Unlocks +2 infantry upgrades."
+    },
+    {
+     "sec": 404,
+     "t": "6:44",
+     "supply": null,
+     "action": "Stim done: move out",
+     "note": "Stim, Concussive, +1 and 4+ Medivacs. Saw Colossi? Add Vikings. High Templar? Plan Ghosts."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": null,
+     "action": "Check: ≈64 SCVs",
+     "note": "Stop SCVs at about 66–70."
+    },
+    {
+     "sec": 426,
+     "t": "7:06",
+     "supply": null,
+     "action": "+2 Infantry Weapons",
+     "note": "Armory is done."
+    }
+   ]
+  },
+  "T": {
+   "name": "TvT Field Manual",
+   "tag": "1v1",
+   "hit": "7:00",
+   "summary": "1v1: Reaper expand into Factory and Starport, 3 CC bio. Supply is the trigger before 3:00, the clock after. Checkpoint rows are SCV targets.",
+   "title": "Reaper expand, 3 CC bio (TvT)",
+   "steps": [
+    {
+     "sec": 0,
+     "t": "0:00",
+     "supply": 12,
+     "action": "SCVs nonstop",
+     "note": "Keep every Command Center busy until about 66. Queue one or two, never five."
+    },
+    {
+     "sec": 17,
+     "t": "0:17",
+     "supply": 14,
+     "action": "Supply Depot",
+     "note": "Top of your main ramp."
+    },
+    {
+     "sec": 40,
+     "t": "0:40",
+     "supply": 16,
+     "action": "Barracks",
+     "note": "Next to the depot so the two wall your ramp."
+    },
+    {
+     "sec": 45,
+     "t": "0:45",
+     "supply": 16,
+     "action": "Refinery",
+     "note": "Send 3 SCVs the moment it finishes."
+    },
+    {
+     "sec": 87,
+     "t": "1:27",
+     "supply": 19,
+     "action": "Orbital Command + Reaper",
+     "note": "Both the moment the Barracks finishes. The Reaper scouts their natural and tech. Keep it alive."
+    },
+    {
+     "sec": 100,
+     "t": "1:40",
+     "supply": 20,
+     "action": "Command Center",
+     "note": "At your natural expansion."
+    },
+    {
+     "sec": 111,
+     "t": "1:51",
+     "supply": 20,
+     "action": "Supply Depot",
+     "note": ""
+    },
+    {
+     "sec": 120,
+     "t": "2:00",
+     "supply": 21,
+     "action": "Marine",
+     "note": "One Marine while you save for the Factory."
+    },
+    {
+     "sec": 132,
+     "t": "2:12",
+     "supply": 22,
+     "action": "Factory",
+     "note": ""
+    },
+    {
+     "sec": 137,
+     "t": "2:17",
+     "supply": 23,
+     "action": "Bunker",
+     "note": "At the natural, facing their side. Put the Marine inside."
+    },
+    {
+     "sec": 142,
+     "t": "2:22",
+     "supply": 23,
+     "action": "Reactor on Barracks",
+     "note": "Finishes at 2:58."
+    },
+    {
+     "sec": 146,
+     "t": "2:26",
+     "supply": 24,
+     "action": "Refinery",
+     "note": "Second gas, 3 SCVs."
+    },
+    {
+     "sec": 174,
+     "t": "2:54",
+     "supply": 26,
+     "action": "Orbital Command (natural)",
+     "note": "As soon as the natural CC finishes."
+    },
+    {
+     "sec": 176,
+     "t": "2:56",
+     "supply": null,
+     "action": "Tech Lab on Factory",
+     "note": "For Siege Tanks."
+    },
+    {
+     "sec": 178,
+     "t": "2:58",
+     "supply": 26,
+     "action": "Starport",
+     "note": "As soon as the Factory finishes."
+    },
+    {
+     "sec": 180,
+     "t": "3:00",
+     "supply": null,
+     "action": "Marines, two at a time",
+     "note": "Reactor is done. The Barracks never sits idle from here."
+    },
+    {
+     "sec": 190,
+     "t": "3:10",
+     "supply": null,
+     "action": "Supply Depot",
+     "note": "From now on, one every 25–30 seconds."
+    },
+    {
+     "sec": 194,
+     "t": "3:14",
+     "supply": null,
+     "action": "Siege Tank",
+     "note": "Siege it (E) at the natural, covering the Bunker. Tanks nonstop from here."
+    },
+    {
+     "sec": 214,
+     "t": "3:34",
+     "supply": null,
+     "action": "Viking",
+     "note": "Kills Medivacs, Liberators and scouting Ravens."
+    },
+    {
+     "sec": 230,
+     "t": "3:50",
+     "supply": null,
+     "action": "Supply Depot",
+     "note": ""
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": null,
+     "action": "Barracks ×2",
+     "note": "Three Barracks total."
+    },
+    {
+     "sec": 240,
+     "t": "4:00",
+     "supply": null,
+     "action": "Check: ≈31 SCVs",
+     "note": "Learning target. Count it in the replay afterwards."
+    },
+    {
+     "sec": 244,
+     "t": "4:04",
+     "supply": null,
+     "action": "Reactor on Starport",
+     "note": "Two Medivacs (or Vikings) at a time."
+    },
+    {
+     "sec": 260,
+     "t": "4:20",
+     "supply": null,
+     "action": "Refinery ×2",
+     "note": "Four gases total."
+    },
+    {
+     "sec": 260,
+     "t": "4:20",
+     "supply": null,
+     "action": "Engineering Bay",
+     "note": ""
+    },
+    {
+     "sec": 270,
+     "t": "4:30",
+     "supply": null,
+     "action": "Command Center #3",
+     "note": "Build it in base. Fly it out behind sieged tanks."
+    },
+    {
+     "sec": 285,
+     "t": "4:45",
+     "supply": null,
+     "action": "+1 Infantry Weapons",
+     "note": ""
+    },
+    {
+     "sec": 286,
+     "t": "4:46",
+     "supply": null,
+     "action": "Tech Lab + Reactor on new Barracks",
+     "note": "Tech Lab on Barracks 2 for Stim. Reactor on Barracks 3."
+    },
+    {
+     "sec": 300,
+     "t": "5:00",
+     "supply": null,
+     "action": "Check: ≈40 SCVs",
+     "note": ""
+    },
+    {
+     "sec": 304,
+     "t": "5:04",
+     "supply": null,
+     "action": "Stimpack",
+     "note": "Barracks Tech Lab. Takes 100 s, done around 6:44."
+    },
+    {
+     "sec": 341,
+     "t": "5:41",
+     "supply": null,
+     "action": "Orbital Command (third)",
+     "note": "Then lift (L) and land it behind a sieged tank."
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": null,
+     "action": "Check: ≈50 SCVs",
+     "note": ""
+    },
+    {
+     "sec": 360,
+     "t": "6:00",
+     "supply": null,
+     "action": "Armory",
+     "note": "Vehicle Weapons help you win tank-against-tank fights."
+    },
+    {
+     "sec": 370,
+     "t": "6:10",
+     "supply": null,
+     "action": "Barracks ×2",
+     "note": "Five Barracks total."
+    },
+    {
+     "sec": 404,
+     "t": "6:44",
+     "supply": null,
+     "action": "Stim done: hold the line",
+     "note": "Fight inside your tank range, not theirs. A 2-Medivac drop splits their attention."
+    },
+    {
+     "sec": 420,
+     "t": "7:00",
+     "supply": null,
+     "action": "Check: ≈60 SCVs",
+     "note": "Stop SCVs at about 66–70."
+    }
+   ]
+  }
+ }
+}

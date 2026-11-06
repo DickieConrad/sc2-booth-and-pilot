@@ -1,0 +1,12 @@
+.rust
+rust/**/target/
+.uv-cache/
+.tools
+*.part
+live/web/node_modules
+live/web/dist/
+live/web/.angular/
+bot/.pkgs
+bot/out/
+tools/out/
+__pycache__/

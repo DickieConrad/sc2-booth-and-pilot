@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SC2 Live Calls</title>
+<style>
+/* Local second-screen page served by timing.py. Polls /state twice a second and speaks new calls.
+   Two build lists: the build you're playing (calls inline) and the Live Coach plan for this matchup. */
+:root{
+  --bg:#070b12; --panel:#0e1621; --line:#22344a; --fg:#d6e3f0; --muted:#7f93a8;
+  --terran:#4fb3ff; --coach:#b48cff; --alert:#ff8a2b; --ok:#5fe3a1; --bad:#ff5c5c;
+  --mono:"Share Tech Mono",ui-monospace,Consolas,monospace; --ui:"Segoe UI",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font-family:var(--ui);font-size:16px}
+.wrap{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:12px;min-height:calc(100vh - 32px)}
+@media (min-width:900px){ .wrap{height:calc(100vh - 32px)} }
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px}
+.clock{font-family:var(--mono);font-size:3rem;line-height:1;color:#fff;min-width:5ch;font-variant-numeric:tabular-nums}
+.plan{font-weight:700;font-size:1.1rem}
+.plan b{color:var(--terran);margin-right:6px}
+.vs{color:var(--muted)}
+.status{margin-left:auto;font-family:var(--mono);font-size:.8rem;padding:3px 8px;border:1px solid var(--line);color:var(--muted)}
+.status.on{border-color:var(--ok);color:var(--ok)}
+.status.off{border-color:var(--bad);color:var(--bad)}
+button{font:inherit;font-weight:700;background:#0a111a;border:1px solid var(--line);color:var(--fg);padding:6px 12px;cursor:pointer}
+button[aria-pressed="true"]{border-color:var(--ok);color:var(--ok)}
+button.arm{border-color:var(--alert);color:var(--alert);animation:arm 1.2s ease-in-out infinite}
+@keyframes arm{50%{box-shadow:0 0 14px rgba(255,138,43,.7)}}
+button:focus-visible{outline:2px solid var(--alert);outline-offset:2px}
+.hud{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:900px){ .hud{grid-template-columns:minmax(0,3fr) minmax(0,2fr)} }
+.call{background:var(--panel);border:2px solid var(--line);padding:14px 18px;min-height:86px}
+.call p{margin:0;font-size:1.7rem;font-weight:700;color:#fff;line-height:1.15}
+.call small{display:block;margin-top:6px;font-family:var(--mono);color:var(--muted)}
+.call.fresh{border-color:var(--alert);animation:pulse 1.2s ease-out 2}
+.call.coach.fresh{border-color:var(--ok)}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,138,43,.7)}100%{box-shadow:0 0 0 18px rgba(255,138,43,0)}}
+.feed{list-style:none;margin:10px 0 0;padding:8px 0 0;border-top:1px solid var(--line);display:grid;gap:3px;font-size:1rem}
+.feed li{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;color:var(--fg)}
+.feed li span:first-child{font-family:var(--mono);color:var(--muted)}
+.feed li.coach span:last-child{color:var(--ok)}
+.feed:empty{display:none}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--panel);border:1px solid var(--line);padding:10px 12px}
+.stat small{display:block;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.stat b{font-family:var(--mono);font-weight:400;font-size:1.8rem;color:#fff}
+.stat span{display:block;font-family:var(--mono);color:var(--muted);font-size:.85rem}
+.stat.warn b{color:var(--alert)} .stat.bad b{color:var(--bad)}
+/* Depot gauge: supply room left vs what the next ~30 s of production needs */
+.room{height:6px;margin-top:6px;background:var(--line);overflow:hidden}
+.room i{display:block;height:100%;width:0;background:#5fd38d;transition:width .4s,background .4s}
+.room.warn i{background:var(--alert)} .room.bad i{background:var(--bad)}
+#roomtxt{font-size:.75rem}
+h2{margin:0;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* Step lane: steps slide right-to-left into the NOW line (like the Live Coach page), driven by the real clock */
+.lanebox{background:var(--panel);border:1px solid var(--line);flex:none}
+.lane{position:relative;height:210px;overflow:hidden;background:#0a111a}
+.lane .hitline{position:absolute;top:0;bottom:0;left:22%;width:2px;background:var(--alert);box-shadow:0 0 12px var(--alert);z-index:3}
+.lane .hitline::after{content:"NOW";position:absolute;top:4px;left:6px;font-family:var(--mono);font-size:.7rem;letter-spacing:.2em;color:var(--alert)}
+.lane .tick{position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--line);will-change:transform}
+.lane .tick span{position:absolute;bottom:4px;left:4px;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.lane .note{position:absolute;left:0;min-width:96px;max-width:190px;padding:6px 10px;border:1px solid var(--terran);background:#0e1621;
+  font-weight:600;font-size:.95rem;line-height:1.15;box-shadow:0 0 10px rgba(79,179,255,.25);will-change:transform;z-index:2}
+.lane .note small{display:block;font-family:var(--mono);font-weight:400;color:var(--muted);font-size:.76rem}
+.lane .note.due{border-color:var(--alert);background:#2a1a0c;color:#fff;box-shadow:0 0 12px rgba(255,138,43,.5)}
+.lane .note.done{opacity:.3}
+.lane .callmark{position:absolute;left:0;top:176px;padding:2px 8px;font-size:.78rem;white-space:nowrap;max-width:260px;overflow:hidden;text-overflow:ellipsis;
+  border-left:3px solid var(--alert);background:rgba(255,138,43,.12);color:var(--alert);will-change:transform;z-index:1}
+.lane .callmark.coach{border-left-color:var(--ok);background:rgba(95,227,161,.12);color:var(--ok)}
+
+/* Coach pointers: post-game notes from the database, newest first */
+.pointers{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ok);padding:10px 12px;flex:none}
+.pointers ol{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:6px;max-height:9.5em;overflow-y:auto}
+.pointers li{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;font-size:.95rem}
+.pointers .who.dickie{color:var(--terran)}
+.pointers .who.coach{color:var(--coach)}
+.pointers li .g{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.pointers li .g.win{color:var(--ok)} .pointers li .g.loss{color:var(--alert)}
+.pointers li.idle{display:block;color:var(--muted)}
+
+/* Checkpoints: the targets to hit, readable from the loading screen */
+.cps{background:var(--panel);border:1px solid var(--line);padding:10px 12px;display:grid;gap:8px}
+.cprow{display:grid;grid-template-columns:72px minmax(0,1fr);gap:10px;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.cp{font-family:var(--mono);font-size:.95rem;padding:4px 10px;border:1px solid var(--line);background:#0a111a;color:var(--fg);white-space:nowrap}
+.cp b{color:#fff;font-weight:400;margin-left:6px}
+.cp small{margin-left:6px;color:var(--muted)}
+.cp.next{border-color:var(--terran);box-shadow:inset 0 0 0 1px var(--terran)}
+.cp.hit{border-color:var(--ok);color:var(--ok)} .cp.hit b{color:var(--ok)}
+.cp.miss{border-color:var(--alert);color:var(--alert)} .cp.miss b{color:var(--alert)}
+.cp.past{opacity:.45}
+.focus{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.92rem}
+.focus li::before{content:"▸ ";color:var(--ok)}
+
+/* Build lists */
+.tls{display:grid;gap:12px;grid-template-columns:minmax(0,1fr);flex:1;min-height:0}
+@media (min-width:900px){ .tls{grid-template-columns:minmax(0,1fr) minmax(0,1fr)} }
+.tl{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--terran);min-width:0;min-height:0}
+.tl.ref{border-top-color:var(--coach)}
+.tlhead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.tlhead .grow{flex:1}
+.tabs{display:flex;flex-wrap:wrap;gap:4px}
+.tabs button{padding:3px 9px;font-family:var(--mono)}
+.tabs button.match{border-color:var(--coach);color:var(--coach)}
+.tlsub{padding:8px 12px;border-bottom:1px solid var(--line);color:var(--muted);font-size:.88rem}
+.tlsub b{color:var(--fg)}
+.tlist{position:relative;list-style:none;margin:0;padding:6px;display:grid;gap:3px;align-content:start;overflow-y:auto;overscroll-behavior:contain;max-height:70vh}
+@media (min-width:900px){ .tlist{max-height:none;flex:1} }
+.tlist li{display:grid;grid-template-columns:46px 28px minmax(0,1fr);gap:2px 10px;align-items:baseline;padding:6px 10px;background:#0a111a;border-left:3px solid var(--terran)}
+.ref .tlist li{border-left-color:var(--coach)}
+.tlist li .tm{font-family:var(--mono);color:#fff}
+.tlist li .sp{font-family:var(--mono);color:var(--muted);font-size:.85rem}
+.tlist li .ac{font-weight:600}
+.tlist li .nt{grid-column:3;color:var(--muted);font-size:.85rem}
+.tlist li.passed{opacity:.4}
+.tlist li.now{background:#16263a;box-shadow:inset 0 0 0 1px var(--terran)}
+.ref .tlist li.now{box-shadow:inset 0 0 0 1px var(--coach)}
+.tlist li.due{box-shadow:inset 0 0 0 2px var(--alert)}
+.tlist li.callrow{border-left-color:var(--alert);background:rgba(255,138,43,.08)}
+.tlist li.callrow .ac{color:var(--alert)}
+.tlist li.callrow.coach{border-left-color:var(--ok);background:rgba(95,227,161,.08)}
+.tlist li.callrow.coach .ac{color:var(--ok)}
+.tlist li.callrow .sp{font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+.followbtn[hidden]{display:none}
+@media (max-width:560px){.clock{font-size:2.2rem}.call p{font-size:1.3rem}.stat b{font-size:1.3rem}}
+@media (prefers-reduced-motion:reduce){.call.fresh{animation:none}}
+dialog.relnotes{background:var(--panel);color:var(--fg);border:1px solid var(--line);max-width:min(720px,calc(100vw - 32px));max-height:80vh;padding:16px 20px}
+dialog.relnotes::backdrop{background:rgba(0,0,0,.6)}
+dialog.relnotes h3{margin:14px 0 6px;color:var(--ok);font-size:1rem}
+dialog.relnotes ul{margin:0;padding-left:18px;display:grid;gap:4px}
+</style>
+</head>
+<body>
+<dialog class="relnotes" id="relnotes"><button id="relclose" style="float:right">Close</button><div id="relbody"></div></dialog>
+<div class="wrap">
+  <div class="top">
+    <div class="clock" id="clock">-:--</div>
+    <div><div class="plan" id="plan">Waiting for a game</div><div class="vs" id="vs"></div></div>
+    <button id="voice" aria-pressed="false" title="Browsers need one click before a page may speak">Voice off</button>
+    <button id="cues" aria-pressed="true" title="Speak your next build step 5 seconds before it is due">Step cues</button>
+    <button id="booth" aria-pressed="true" title="The coach's own voice (Claude in the booth); his lines still show on the page">Booth</button>
+    <button id="notes" title="What changed, newest first">Release notes</button>
+    <a href="/history" target="_blank" rel="noopener" title="Previous games: results, supply, calls, notes (new tab)" style="font-weight:700;border:1px solid var(--line);color:var(--fg);padding:6px 12px;text-decoration:none">History</a>
+    <span class="status" id="status">connecting</span>
+  </div>
+
+  <div class="hud">
+    <section class="call" id="call" aria-live="polite"><p id="calltext">No calls yet.</p><small id="callmeta"></small>
+      <ol class="feed" id="feed" aria-label="Earlier calls"></ol></section>
+    <div class="stats">
+      <div class="stat" id="smin"><small>Minerals</small><b id="min">-</b></div>
+      <div class="stat"><small>Gas</small><b id="gas">-</b></div>
+      <div class="stat" id="ssup"><small>Supply</small><b id="sup">-</b><span id="plansup"></span>
+        <div class="room" id="room" title="Supply room left: green = safe, amber = build a depot, red = blocked"><i></i></div>
+        <span id="roomtxt"></span></div>
+    </div>
+  </div>
+
+  <section class="lanebox" aria-label="Step lane">
+    <div class="lane" id="lane"><div class="hitline"></div></div>
+  </section>
+
+  <section class="pointers" aria-label="Coach pointers">
+    <h2>Coach pointers</h2>
+    <ol id="pointers"><li class="idle">No pointers yet.</li></ol>
+  </section>
+
+  <section class="cps" aria-label="Checkpoints">
+    <div class="cprow"><h2>Supply</h2><div class="chips" id="cpSupply"></div></div>
+    <div class="cprow"><h2>Timings</h2><div class="chips" id="cpKey"></div></div>
+    <div class="cprow"><h2>Focus</h2><ul class="focus" id="cpFocus"></ul></div>
+  </section>
+
+  <div class="tls">
+    <section class="tl main" id="tlMain" aria-label="Your build">
+      <div class="tlhead"><h2>Your build</h2><span class="grow"></span><button class="followbtn" hidden>Back to NOW</button></div>
+      <div class="tlsub"></div>
+      <ul class="tlist"></ul>
+    </section>
+    <section class="tl ref" id="tlRef" aria-label="Live Coach plan">
+      <div class="tlhead"><h2>Reference</h2><div class="tabs" role="group" aria-label="Plan"></div><span class="grow"></span><button class="followbtn" hidden>Back to NOW</button></div>
+      <div class="tlsub"></div>
+      <ul class="tlist"></ul>
+    </section>
+  </div>
+</div>
+
+<script>
+// Show script errors on the page (status chip + title) so a silent failure is visible from the couch.
+let pageError = null;
+window.addEventListener("error", e => {
+  pageError = `${e.message} (line ${e.lineno})`;
+  const s = document.getElementById("status");
+  if (s) { s.textContent = "page error: " + pageError; s.className = "status off"; }
+  document.title = `ERR ${pageError}`;
+});
+const $ = id => document.getElementById(id);
+const GRACE = 10;  // same as timing.py: a step counts as passed 10s after its time
+const mmss = s => { s = Math.max(0, Math.floor(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; };
+const secs = t => { const [m, s] = t.split(":").map(Number); return m * 60 + s; };
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+};
+
+let plans = null, state = null, offset = 0, lastSay = null, missingPlan = null;
+let voice = store.get("voice") === "1";
+
+function setVoice(on) {
+  voice = on; store.set("voice", on ? "1" : "0");
+  $("voice").setAttribute("aria-pressed", String(on));
+  $("voice").textContent = on ? "Voice on" : "Voice off";
+  $("voice").classList.remove("arm");
+}
+// The click also unlocks audio playback (browsers block sound until the page is clicked once).
+let armed = false;   // browsers keep a page silent until it has been clicked once after (re)loading
+$("voice").onclick = () => {
+  if (voice && !armed) { armed = true; setVoice(true); }   // first click after a reload only arms the sound
+  else { setVoice(!voice); armed = voice; }
+  if (!voice) return;
+  actx = actx || new AudioContext(); actx.resume();
+  if (clips && clips.calls.plan) playClips([clips.calls.plan], true); else speak("Voice on");
+};
+setVoice(voice);
+// Remembered "Voice on" after a reload: make the needed click impossible to miss.
+if (voice) { $("voice").textContent = "Arm Voice"; $("voice").classList.add("arm"); }
+
+// ---------- latency trace: only when the helper runs with SC2_TIMING_TRACE=1 (state.trace) ----------
+// Per spoken call / cue: when the page got it (recv), when its audio started (start), clip fetch+decode (dec)
+// and the rest (wait: queue behind other speech). Reported on the next /notes poll; summary: live/looptime.py.
+const tr = { open: {}, done: [] };
+let trCur = null;   // the tag of the call being handed to playClips/speak right now (consumed synchronously)
+function trRecv(key) {
+  if (!state || !state.trace) return null;
+  tr.open[key] = { key, recv: Date.now() };
+  return key;
+}
+function trDone(tag, how, dec) {
+  const r = tag && tr.open[tag];
+  if (!r) return;
+  delete tr.open[tag];
+  r.how = how; r.start = Date.now(); r.dec = dec || 0; r.wait = r.start - r.recv - r.dec;
+  tr.done.push(r); console.debug("trace", r);
+}
+function trReport() {   // done records + anything never spoken within 15 s (voice off, booth muted, dropped cue)
+  for (const k in tr.open) if (Date.now() - tr.open[k].recv > 15000) { tr.done.push({ ...tr.open[k], how: "none" }); delete tr.open[k]; }
+  return tr.done.length ? JSON.stringify(tr.done.splice(0, 40)) : "";
+}
+
+// ---------- the pilot's voice: pre-rendered clips through a cockpit-radio filter ----------
+let clips = null, actx = null, playing = null, clipQueue = [];
+// busy: "cue" / "call" from the moment a sequence starts (before its first clip has loaded) until it ends.
+// gen bumps whenever the voice is cut off (a call, game over): a sequence checks it after every await.
+// cueEpoch bumps at game over: cues waiting to retry in browser speech give up. cueUtter: a cue being spoken.
+let busy = null, gen = 0, cueEpoch = 0, cueUtter = null;
+fetch("/voice/manifest.json", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(m => { clips = m; }).catch(() => {});
+const clipBuf = {};
+
+// Radio strength, set by ear by the owner: started at 1.0, then "dial down the static", then "another 25%".
+const RADIO = { hp: 280, lp: 3800, mid: 3.75, grit: 2.25, hiss: 0.003 };
+// Master volume for every voice (clips and browser speech), set by ear: "turn it down like twenty percent".
+const VOLUME = 0.8;
+
+function radioChain(ctx) {   // thin band, mild grit, compression, light hiss
+  const hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = RADIO.hp;
+  const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = RADIO.lp;
+  const mid = ctx.createBiquadFilter(); mid.type = "peaking"; mid.frequency.value = 1800; mid.gain.value = RADIO.mid;
+  const shaper = ctx.createWaveShaper(); const k = RADIO.grit, n = 1024, curve = new Float32Array(n);
+  for (let i = 0; i < n; i++) { const x = i * 2 / n - 1; curve[i] = (1 + k) * x / (1 + k * Math.abs(x)); }
+  shaper.curve = curve;
+  const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -24; comp.ratio.value = 8;
+  const out = ctx.createGain(); out.gain.value = 0.85 * VOLUME;
+  hp.connect(lp).connect(mid).connect(shaper).connect(comp).connect(out).connect(ctx.destination);
+  return hp;
+}
+
+// The coach's own voice (coach_say.py renders it live): clean, no radio, just rumble cut and a light compressor.
+function cleanChain(ctx) {
+  const hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 70;
+  const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -18; comp.ratio.value = 2.5;
+  const out = ctx.createGain(); out.gain.value = VOLUME;
+  hp.connect(comp).connect(out).connect(ctx.destination);
+  return hp;
+}
+
+async function loadClip(file) {
+  if (!clipBuf[file]) clipBuf[file] = fetch("/voice/" + file).then(r => r.arrayBuffer()).then(b => actx.decodeAudioData(b))
+    .catch(e => { delete clipBuf[file]; throw e; });   // a missing clip may appear later (coach lines render live)
+  return clipBuf[file];
+}
+
+// One voice at a time: the pilot's clips and browser speech never talk over each other.
+const ttsBusy = () => "speechSynthesis" in window && (speechSynthesis.speaking || speechSynthesis.pending);
+function stopPlaying() { if (playing) { const p = playing; playing = null; try { p.stop(); } catch (e) {} } }
+function hush() {   // a call cuts off everything: clip (playing or still loading), queued cues, browser speech
+  gen++; busy = null; cueUtter = null;
+  clipQueue = [];
+  stopPlaying();
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+}
+// The game ended: no step cue plays from here on (queued, loading, playing or waiting to retry). A call finishes.
+function gameOver() {
+  clipQueue = [];
+  cueEpoch++;
+  if (busy === "cue") { gen++; busy = null; stopPlaying(); }
+  if (cueUtter) { cueUtter = null; speechSynthesis.cancel(); }
+}
+function nextClip() {
+  const next = !busy && !ttsBusy() && clipQueue.shift();
+  if (next) playClips(next, false).catch(() => {});   // a cue clip that won't load: the list shows the step
+}
+
+// Play clip files in order. A call (interrupt=true) stops whatever is playing; cues queue behind.
+// clean=true: the coach's voice (cleanChain, no hiss) instead of the pilot's radio.
+// Busy from the first line on, so a second cue in the same update queues instead of playing on top.
+async function playClips(files, interrupt, clean) {
+  const tag = trCur || files.tag; trCur = null;
+  actx = actx || new AudioContext();
+  if (interrupt) hush();
+  else if (busy || ttsBusy()) { if (tag) files.tag = tag; clipQueue.push(files); return; }
+  const my = gen;
+  busy = interrupt ? "call" : "cue";
+  try {
+    for (const f of files) {
+      const t0 = Date.now();
+      let buf;
+      try { buf = await loadClip(f); } catch (e) { if (my !== gen) return; throw e; }
+      if (my !== gen) return;   // cut off while it loaded
+      if (tag && f === files[0]) trDone(tag, "clip", Date.now() - t0);
+      await playBuf(buf, clean);
+      if (my !== gen) return;   // interrupted by a call
+      playing = null;
+    }
+  } finally {
+    if (my === gen) { playing = null; busy = null; nextClip(); }   // also after a clip that failed to load
+  }
+}
+// Start one decoded clip; resolves when it ends (or is stopped).
+function playBuf(buf, clean) {
+  const src = actx.createBufferSource(); src.buffer = buf;
+  const input = clean ? cleanChain(actx) : radioChain(actx);
+  src.connect(input);
+  const noise = actx.createBufferSource(), nb = actx.createBuffer(1, Math.ceil(actx.sampleRate * (buf.duration + 0.15)), actx.sampleRate);
+  const d = nb.getChannelData(0); for (let i = 0; i < d.length && !clean; i++) d[i] = (Math.random() * 2 - 1) * RADIO.hiss;
+  noise.buffer = nb; if (!clean) noise.connect(input);
+  playing = src;
+  return new Promise(res => { src.onended = res; noise.start(); src.start(); });
+}
+
+// A helper call of a known kind, or step cues that all have clips -> the pilot; anything else -> browser speech.
+// A coach line with a rendered clip -> the coach's clean voice (falls back to browser speech if the clip won't load).
+function speakCall(say) {
+  if (!voice || (say.from === "coach" && !boothOn)) return;
+  if (say.from === "coach" && say.audio) { playClips([say.audio], true, true).catch(() => speak(say.text, undefined, true)); return; }
+  const f = clips && say.from !== "coach" && clips.calls[say.kind];
+  if (f) playClips([f], true).catch(() => {}); else speak(say.text, undefined, say.from === "coach");
+}
+
+function speakCues(steps) {
+  if (!voice || !cueOn) return;
+  const files = clips ? steps.map(s => clips.cues[s]) : [];
+  if (files.length && files.every(Boolean)) playClips(files, false).catch(() => {});
+  else speak(`${steps.join(", then ")}, ${CUE_LEAD} seconds`, 2);
+}
+
+// The coach's fallback browser voice: a male system voice if there is one (English GB first), else the default.
+let coachTts;
+function coachVoice() {
+  if (coachTts !== undefined) return coachTts;
+  const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+  if (!vs.length) return null;   // voices not loaded yet: try again next line
+  const male = /\b(Ryan|George|Thomas|Guy|David|Mark|Christopher|Eric|Andrew|Brian|Davis|Roger|Steffan|James|Daniel|Male)\b/i;
+  coachTts = vs.find(v => male.test(v.name) && /GB/i.test(v.lang)) || vs.find(v => male.test(v.name)) || null;
+  return coachTts;
+}
+
+// Calls interrupt anything; step cues wait their turn and never cut off a call.
+function speak(text, cue, coach) {
+  const tag = trCur; trCur = null;
+  if (!voice || !("speechSynthesis" in window)) return;
+  if (cue && (ttsBusy() || busy)) {
+    const epoch = cueEpoch;
+    setTimeout(() => { if (epoch !== cueEpoch) return; trCur = tag; speak(text, cue - 1); }, 1500);   // game over: give up
+    return;
+  }
+  if (cue === 0) return;   // still busy after the retries: drop the cue, the list shows it anyway
+  if (cue) speechSynthesis.cancel(); else hush();
+  const u = new SpeechSynthesisUtterance(text.replace(/(\d+):(\d\d)/g, "$1 $2"));
+  u.rate = 1.15; u.volume = VOLUME;
+  cueUtter = cue ? u : null;
+  if (coach && coachVoice()) { u.voice = coachTts; u.rate = 1.05; u.pitch = 0.9; }
+  u.onend = u.onerror = () => { if (cueUtter === u) cueUtter = null; setTimeout(nextClip, 50); };   // cue clips that waited for this line
+  if (tag) u.onstart = () => trDone(tag, "tts");
+  speechSynthesis.speak(u);
+}
+
+// ---------- checkpoints ----------
+// Supply targets each minute (graded against your real supply as the clock passes them) and the
+// plan's key timings. Grades live in the page: a reload mid-game starts grading from that point.
+const KEY_STEPS = [/^Command Center( \(natural\))?$/, /^Factory$/, /^Starport$/, /^Stim/, /^Command Center #3/,
+                   /^Barracks ×2/, /move out/i, /^HIT/];
+let cpPlan = "", cpGame = "", grades = {};
+
+function supplyAt(steps, sec) {
+  let s = null;
+  for (const st of steps) if (st.sec <= sec) s = st.supply;
+  return s;
+}
+
+function renderCheckpoints() {
+  const id = mainPlan(), p = plans.plans[id];
+  if (!p) return;
+  const game = state && state.in_game ? `${state.plan}|${state.vs}` : "";
+  if (game !== cpGame) { cpGame = game; if (game) grades = {}; }
+  const c = gameClock();
+
+  if (id !== cpPlan) {
+    cpPlan = id;
+    const last = p.steps[p.steps.length - 1].sec;
+    const sup = $("cpSupply"); sup.innerHTML = "";
+    for (let m = 2; m * 60 <= Math.min(last, 600); m++) {
+      const want = supplyAt(p.steps, m * 60);
+      if (want == null || (m > 2 && want === supplyAt(p.steps, (m - 1) * 60))) continue;   // no new target that minute
+      const chip = el("span", "cp", [["", `${m}:00`]]);
+      const b = document.createElement("b"); b.textContent = want; chip.append(b);
+      chip.dataset.sec = m * 60; chip.dataset.want = want;
+      sup.append(chip);
+    }
+    // 1v1 Field Manual builds give SCV-count checkpoints instead of supply after 3:00 (shown, not graded).
+    for (const st of p.steps.filter(s => /^Check/.test(s.action))) {
+      const chip = el("span", "cp", [["", st.t]]);
+      const b = document.createElement("b"); b.textContent = st.action.replace(/^Check:\s*/, "").replace(/, stop here/, ""); chip.append(b);
+      chip.dataset.check = st.sec;
+      sup.append(chip);
+    }
+    const key = $("cpKey"); key.innerHTML = "";
+    for (const re of KEY_STEPS) {
+      const st = p.steps.find(s => re.test(s.action));
+      if (!st) continue;
+      const chip = el("span", "cp", [["", st.t]]);
+      const b = document.createElement("b"); b.textContent = cueText(st.action); chip.append(b);
+      chip.dataset.sec = st.sec;
+      key.append(chip);
+    }
+    const f = $("cpFocus"); f.innerHTML = "";
+    for (const line of plans.focus || []) { const li = document.createElement("li"); li.textContent = line; f.append(li); }
+  }
+
+  // Grade supply targets as the clock passes them; mark the next target and timing.
+  let nextSup = null, nextKey = null;
+  for (const chip of $("cpSupply").children) {
+    const sec = Number(chip.dataset.sec), want = Number(chip.dataset.want);
+    if (c != null && c >= sec && grades[sec] == null && state.panel) grades[sec] = state.panel.used;
+    const got = grades[sec];
+    chip.className = "cp" + (got != null ? (got >= want - 2 ? " hit" : " miss") : "");
+    let note = chip.querySelector("small");
+    if (got != null) { if (!note) { note = document.createElement("small"); chip.append(note); } note.textContent = `you ${got}`; }
+    else if (note) note.remove();
+    if (c != null && c < sec && !nextSup) nextSup = chip;
+  }
+  if (nextSup) nextSup.classList.add("next");
+  for (const chip of $("cpKey").children) {
+    const sec = Number(chip.dataset.sec);
+    chip.className = "cp" + (c != null && c > sec + 10 ? " past" : "");
+    if (c != null && c <= sec + 10 && !nextKey) nextKey = chip;
+  }
+  if (nextKey) nextKey.classList.add("next");
+}
+
+// ---------- step lane ----------
+const LANE_BACK = 10, LANE_AHEAD = 50, NOW_AT = 0.22, TIERS = [26, 74, 122];
+let laneSig = "";
+
+function buildLane() {
+  const id = mainPlan(), p = plans.plans[id];
+  const calls = state.says || [];
+  const sig = [id, calls.map(c => c.id).join(",")].join("|");
+  if (sig === laneSig) return;
+  laneSig = sig;
+  const lane = $("lane");
+  lane.querySelectorAll(".note,.tick,.callmark").forEach(n => n.remove());
+  // Ticks every 10s (positioned in laneTick).
+  const last = p.steps[p.steps.length - 1].sec + 60;
+  for (let s = 0; s <= last; s += 10) {
+    const t = document.createElement("div"); t.className = "tick"; t.dataset.sec = s;
+    if (s % 30 === 0) { const l = document.createElement("span"); l.textContent = mmss(s); t.append(l); }
+    lane.append(t);
+  }
+  // Steps; ones close in time stack into tiers so they don't overlap.
+  const tierEnd = TIERS.map(() => -1e9);
+  for (const st of p.steps) {
+    const n = document.createElement("div"); n.className = "note"; n.dataset.sec = st.sec;
+    n.textContent = cueText(st.action);
+    const sm = document.createElement("small"); sm.textContent = st.supply != null ? `${st.t} · ${st.supply}` : st.t; n.append(sm);
+    let tier = tierEnd.findIndex(end => st.sec >= end);
+    if (tier < 0) tier = tierEnd.indexOf(Math.min(...tierEnd));
+    tierEnd[tier] = st.sec + 8;   // a note is ~8 seconds wide on the lane
+    n.style.top = TIERS[tier] + "px";
+    lane.append(n);
+  }
+  for (const c of calls) {
+    const m = document.createElement("div"); m.className = "callmark" + (c.from === "coach" ? " coach" : "");
+    m.dataset.sec = secs(c.t); m.textContent = c.text; m.title = `${c.t} ${c.text}`;
+    lane.append(m);
+  }
+}
+
+function laneTick(c) {
+  if (!plans || !state || !plans.plans[mainPlan()]) return;
+  buildLane();
+  const lane = $("lane"), w = lane.clientWidth;
+  const pps = (w * (1 - NOW_AT)) / LANE_AHEAD, now = c == null ? 0 : c;
+  for (const n of lane.querySelectorAll("[data-sec]")) {
+    const sec = Number(n.dataset.sec), x = w * NOW_AT + (sec - now) * pps;
+    const visible = sec >= now - LANE_BACK - 10 && sec <= now + LANE_AHEAD + 5;
+    n.style.display = visible ? "" : "none";
+    if (!visible) continue;
+    n.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
+    if (n.classList.contains("note")) {
+      n.classList.toggle("due", c != null && sec - c <= 5 && sec - c > -GRACE);
+      n.classList.toggle("done", c != null && sec <= c - GRACE);
+    }
+  }
+}
+
+// ---------- step cues: your own build step, 5 seconds before it is due ----------
+const CUE_LEAD = 5;
+let cueOn = store.get("cues") !== "0", cued = new Set(), cueKey = "";
+function setCues(on) {
+  cueOn = on; store.set("cues", on ? "1" : "0");
+  $("cues").setAttribute("aria-pressed", String(on));
+}
+$("cues").onclick = () => setCues(!cueOn);
+setCues(cueOn);
+
+// The booth: the coach's spoken lines, separate from the pilot. Muted lines still show on the page.
+let boothOn = store.get("booth") !== "0";
+function setBooth(on) {
+  boothOn = on; store.set("booth", on ? "1" : "0");
+  $("booth").setAttribute("aria-pressed", String(on));
+}
+$("booth").onclick = () => setBooth(!boothOn);
+
+// Release notes (live/CHANGELOG.md): "## " lines are versions, "- " lines are changes. The top version labels the button.
+async function loadNotes(open) {
+  try {
+    const md = await (await fetch("/changelog", { cache: "no-store" })).text();
+    const body = $("relbody"); body.innerHTML = "";
+    let ul = null;
+    for (const line of md.split(/\r?\n/)) {
+      if (line.startsWith("## ")) { const h = document.createElement("h3"); h.textContent = line.slice(3); body.append(h); ul = null; }
+      else if (line.startsWith("- ")) {
+        if (!ul) { ul = document.createElement("ul"); body.append(ul); }
+        const li = document.createElement("li"); li.textContent = line.slice(2); ul.append(li);
+      }
+    }
+    const top = md.match(/^## (v[\d.]+)/m);
+    if (top) $("notes").textContent = `${top[1]} notes`;
+    if (open) $("relnotes").showModal();
+  } catch (e) {}
+}
+$("notes").onclick = () => loadNotes(true);
+$("relclose").onclick = () => $("relnotes").close();
+loadNotes(false);
+setBooth(boothOn);
+
+const cueText = a => a.replace(/\s*\(.*?\)/g, "").replace(/\bx(\d)/g, "$1").replace(/#/g, "").trim();
+
+// Cue events from the Rust engine (coach-core): "target" = the usual 5-second cue, "now" = catch-up when late.
+let lastCue = null;
+function playCueEvent(ev) {
+  if (ev.type === "target") return speakCues(ev.keys);
+  if (!voice || !cueOn) return;
+  const files = clips && clips.now ? ev.keys.map(k => clips.now[k]) : [];
+  if (files.length && files.every(Boolean)) playClips(files, false).catch(() => {});
+  else speak(`${ev.keys.join(", then ")}, now!`, 2);
+}
+
+function cueTick(c) {
+  if (state && state.cue_engine) return;   // the engine is calling cues; this is the fallback
+  if (c == null || !plans) return;
+  const id = state.plan, p = plans.plans[id];
+  if (!p) return;
+  const key = `${id}|${state.vs}`;
+  if (key !== cueKey) { cueKey = key; cued = new Set(); }
+  const due = [];
+  for (const st of p.steps) {
+    const at = st.sec - CUE_LEAD;
+    if (cued.has(st.sec) || c < at || /^Check/.test(st.action)) continue;   // checkpoints aren't actions
+    cued.add(st.sec);
+    if (c - at <= 3) due.push(cueText(st.action));   // skip steps already past (joined late, clock jump)
+  }
+  if (due.length) speakCues(due);
+}
+
+function el(tag, cls, parts) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  for (const [c, text] of parts) { const s = document.createElement("span"); s.className = c; s.textContent = text; n.append(s); }
+  return n;
+}
+
+// The lane's clock: runs at real speed every frame and glides toward the helper's clock instead of
+// jumping (each update lands a little early or late); only a big jump (>3 s: reconnect, new game) snaps.
+let smooth = null, smoothAt = 0;
+function smoothClock() {
+  const c = gameClock(), now = performance.now();
+  if (c == null) { smooth = null; return null; }
+  const dt = Math.min(0.25, (now - smoothAt) / 1000); smoothAt = now;
+  if (smooth == null || Math.abs(c - smooth) > 3) return (smooth = c);
+  smooth += dt + (c - smooth - dt) * Math.min(1, dt * 1.5);
+  return smooth;
+}
+(function frame() {
+  if (plans && state) laneTick(smoothClock());
+  requestAnimationFrame(frame);
+})();
+
+function gameClock() {
+  if (!state || !state.in_game) return null;
+  return state.clock + Math.min(1.5, Date.now() / 1000 - offset - state.clock_wall);
+}
+
+// The plan the Live Coach page shows for this matchup (the helper sends it; older helpers: derive from the matchup).
+function matchPlan() {
+  if (!state) return "A";
+  if (state.coach_plan) return state.coach_plan;
+  const picks = plans && plans.matchups[state.key];
+  return picks ? picks[0] : "A";
+}
+
+// One build list. getPlan() says which plan to show; withCalls puts the calls inline.
+function Timeline(root, getPlan, withCalls) {
+  const list = root.querySelector(".tlist"), sub = root.querySelector(".tlsub"), btn = root.querySelector(".followbtn");
+  let sig = "", follow = true;
+  btn.onclick = () => { follow = true; btn.hidden = true; tick(true); };
+  for (const ev of ["wheel", "touchstart", "mousedown", "keydown"]) {
+    list.addEventListener(ev, () => { if (state && state.in_game) { follow = false; btn.hidden = false; } }, { passive: true });
+  }
+
+  function render() {
+    const id = getPlan(), p = plans.plans[id];
+    if (!p) return;
+    const calls = withCalls && state ? state.says : [];
+    const s = [id, calls.map(c => c.id).join(",")].join("|");
+    if (s === sig) return;
+    sig = s;
+
+    sub.innerHTML = "";
+    const b = document.createElement("b"); b.textContent = `${id} · ${p.name}`;
+    sub.append(b, ` — ${p.title} · hit ${p.hit}`);
+
+    const rows = p.steps.map(st => ({ ...st, kind: "step" }));
+    for (const c of calls) rows.push({ sec: secs(c.t), t: c.t, kind: "call", call: c });
+    rows.sort((a, b) => a.sec - b.sec || (a.kind === "call") - (b.kind === "call"));
+
+    const keep = list.scrollTop; list.innerHTML = "";
+    for (const r of rows) {
+      let li;
+      if (r.kind === "call") {
+        const coach = r.call.from === "coach";
+        li = el("li", "callrow" + (coach ? " coach" : ""), [["tm", r.t], ["sp", coach ? "coach" : r.call.kind], ["ac", r.call.text]]);
+      } else {
+        li = el("li", "", [["tm", r.t], ["sp", r.supply ?? ""], ["ac", r.action]]);
+        if (r.note) { const n = document.createElement("span"); n.className = "nt"; n.textContent = r.note; li.append(n); }
+        li.dataset.sec = r.sec;
+      }
+      list.append(li);
+    }
+    list.scrollTop = keep;
+    tick(true);
+  }
+
+  // Mark passed / current / due steps and keep the current step in view.
+  function tick(jump) {
+    const c = gameClock();
+    const items = [...list.querySelectorAll("li[data-sec]")];
+    let current = null;
+    for (const li of items) {
+      const sec = Number(li.dataset.sec);
+      const passed = c != null && sec <= c - GRACE;
+      li.classList.toggle("passed", passed);
+      li.classList.toggle("due", c != null && !passed && sec - c <= 5);
+      li.classList.remove("now");
+      if (c != null && !passed && !current) current = li;
+    }
+    if (!current) return;
+    current.classList.add("now");
+    if (follow && (jump || current.dataset.shown !== "1")) {
+      items.forEach(li => delete li.dataset.shown); current.dataset.shown = "1";
+      list.scrollTo({ top: Math.max(0, current.offsetTop - list.clientHeight / 3), behavior: jump ? "auto" : "smooth" });
+    }
+  }
+
+  function gameStarted() { follow = true; btn.hidden = true; }
+  return { render, tick, gameStarted, reset() { sig = ""; } };
+}
+
+let refPlan = null;   // null = the default reference below
+const mainPlan = () => (state && state.plan) || matchPlan();
+// Reference list: the Live Coach matchup plan, or MMM when you're already playing the matchup plan.
+const defaultRef = () => (mainPlan() === matchPlan() ? "M" : matchPlan());
+const main = Timeline($("tlMain"), mainPlan, true);
+const ref = Timeline($("tlRef"), () => refPlan || defaultRef(), false);
+
+function renderTabs() {
+  const tabs = $("tlRef").querySelector(".tabs"); tabs.innerHTML = "";
+  for (const id of Object.keys(plans.plans)) {
+    const b = document.createElement("button");
+    b.textContent = id; b.title = plans.plans[id].name;
+    b.setAttribute("aria-pressed", String(id === (refPlan || defaultRef())));
+    if (id === matchPlan()) { b.classList.add("match"); b.title += " (Live Coach pick for this matchup)"; }
+    b.onclick = () => { refPlan = id === defaultRef() ? null : id; ref.reset(); ref.render(); renderTabs(); };
+    tabs.append(b);
+  }
+}
+
+// Depot gauge (Dickie's #1 leak): room = cap - used, against what ~30 s of production eats
+// (about 6 early, 12 from 6:00, 18 from 9:00). Counts each new supply block this game.
+let blocks = 0, wasBlocked = false, gaugeClock = 0;
+function depotGauge(p, t) {
+  if (!p || t < gaugeClock) { blocks = 0; wasBlocked = false; }   // new game (or between games)
+  gaugeClock = p ? t : 0;
+  const bar = $("room");
+  if (!p || p.cap >= 200) { bar.className = "room"; bar.firstChild.style.width = p ? "100%" : "0"; $("roomtxt").textContent = ""; return; }
+  const need = t < 360 ? 6 : t < 540 ? 12 : 18, room = p.cap - p.used, blocked = room <= 0;
+  if (blocked && !wasBlocked) blocks++;
+  wasBlocked = blocked;
+  bar.className = "room" + (blocked ? " bad" : room < need ? " warn" : "");
+  bar.firstChild.style.width = Math.max(4, Math.min(100, room / (need * 2) * 100)) + "%";
+  $("roomtxt").textContent = (blocked ? "BLOCKED: depot!" : room < need ? `${room} room: depot now` : `${room} room`)
+    + (blocks ? ` · blocks ${blocks}` : "");
+}
+
+function render() {
+  const s = state;
+  $("plan").innerHTML = "";
+  if (s.plan) {
+    const b = document.createElement("b"); b.textContent = s.plan === "M" ? "MMM" : `Plan ${s.plan}`;
+    $("plan").append(b, s.plan === "M" ? "" : s.plan_name);
+    $("vs").textContent = (s.in_game ? "vs " : "Last game: vs ") + s.vs;
+  } else {
+    $("plan").textContent = "Waiting for a game"; $("vs").textContent = "";
+  }
+
+  const p = s.in_game ? s.panel : null;   // never show a stale read between games
+  $("min").textContent = p ? p.minerals : "-";
+  $("gas").textContent = p ? p.gas : "-";
+  $("sup").textContent = p ? `${p.used}/${p.cap}` : "-";
+  $("plansup").textContent = p && s.plan_supply != null ? `plan ${s.plan_supply}` : "";
+  const t = s.clock;
+  $("smin").className = "stat" + (p && t >= 60 && p.minerals >= (t < 240 ? 400 : 600) ? " warn" : "");
+  $("ssup").className = "stat" + (p && p.cap < 200 && p.used >= p.cap ? " bad"
+    : p && s.plan_supply != null && p.used < s.plan_supply - 3 ? " warn" : "");
+  depotGauge(p, t);
+
+  const last = s.says[s.says.length - 1];
+  if (last && last.id !== lastSay) {
+    const first = lastSay === null;
+    lastSay = last.id;
+    $("calltext").textContent = last.text;
+    $("callmeta").textContent = `${last.t} · ${last.from === "coach" ? "coach" : last.kind}`;
+    $("call").className = "call" + (last.from === "coach" ? " coach" : "");
+    if (!first) { void $("call").offsetWidth; $("call").classList.add("fresh"); trCur = trRecv("s" + last.id); speakCall(last); trCur = null; }
+  } else if (!last && lastSay === null) {
+    lastSay = 0;
+  }
+  // Engine cues: play the new ones (not the backlog on page load, none once the game is over).
+  const cs = s.cues || [], newest = cs.length ? cs[cs.length - 1].id : 0;
+  if (lastCue === null || !s.in_game) lastCue = newest;
+  else for (const ev of cs.filter(e => e.id > lastCue)) { trCur = trRecv("c" + ev.id); playCueEvent(ev); trCur = null; }
+  lastCue = Math.max(lastCue, newest);
+  if (s.in_game && s.cue_engine && s.lateness >= 1) {
+    $("vs").textContent = `vs ${s.vs} · late +${Math.round(s.lateness)}s` + (s.shift ? ` · cues +${s.shift}s` : "");
+  }
+  // Feed: the calls before the latest one, newest first.
+  const feed = $("feed"); feed.innerHTML = "";
+  for (const c of s.says.slice(-7, -1).reverse()) feed.append(el("li", c.from === "coach" ? "coach" : "", [["", c.t], ["", c.text]]));
+
+  renderTabs(); main.render(); ref.render();
+}
+
+function apply(next) {
+  const wasIn = state && state.in_game;
+  state = next;
+  offset = Date.now() / 1000 - state.now;
+  if (state.in_game && !wasIn) { refPlan = null; main.gameStarted(); ref.gameStarted(); ref.reset(); }
+  if (wasIn && !state.in_game) gameOver();   // nothing queued or loading may speak after the game
+  if (!pageError) { $("status").textContent = state.in_game ? "LIVE" : "IDLE"; $("status").className = "status on"; }
+  // A plan this page hasn't loaded (a sparring bot's build, plan BOT, written at game start): fetch /plans again,
+  // once per plan id, then render.
+  if (plans && state.plan && !plans.plans[state.plan] && missingPlan !== state.plan) {
+    missingPlan = state.plan; plans = null; poll();
+  }
+  if (plans) render();
+}
+
+function offline() { $("status").textContent = "helper not running"; $("status").className = "status off"; }
+
+async function poll() {
+  try {
+    if (!plans) plans = await (await fetch("/plans", { cache: "no-store" })).json();
+    apply(await (await fetch("/state", { cache: "no-store" })).json());
+  } catch (e) { offline(); }
+}
+
+// Live updates: the helper pushes every change (Server-Sent Events); the browser reconnects by itself.
+// After a reconnect, re-fetch plans in case the helper restarted with new ones.
+function listen() {
+  const es = new EventSource("/events");
+  es.onopen = () => { plans = null; poll(); };
+  es.onmessage = e => { try { apply(JSON.parse(e.data)); } catch (err) {} };
+  es.onerror = offline;
+}
+// Coach pointers: refreshed every 3s (review notes, plus callouts and coach lines during games).
+let pointerSig = "";
+async function pollNotes() {
+  try {
+    // Tooling notes (reader, helper, duplicate rows) live in the DB for the coach, not on the player's page.
+    const rep = trReport();   // tracing on: the page's delays ride along on this poll (no extra request)
+    const rows = (await (await fetch(rep ? "/notes?trace=" + encodeURIComponent(rep) : "/notes", { cache: "no-store" })).json())
+      .filter(r => !/^(Reader|Switched the helper|DB live|Duplicate of game)/.test(r.text));
+    const sig = rows.map(r => r.id).join(",");
+    if (sig === pointerSig) return;
+    pointerSig = sig;
+    const ol = $("pointers"); ol.innerHTML = "";
+    if (!rows.length) { ol.append(el("li", "idle", [["", "No pointers yet."]])); return; }
+    for (const r of rows) {
+      const opp = r.enemies ? r.enemies.replace(/ \((\w+)\)/g, "") : "";
+      const label = r.game_id ? `#${r.game_id} ${r.result === "Victory" ? "W" : r.result === "Defeat" ? "L" : "?"} vs ${opp}` : "session";
+      // Live conversation lines: only the speaker's name is colored (Dickie blue, Coach purple).
+      const m = r.text.match(/^(Owner callout|Coach): (.*)$/s);
+      const li = el("li", "", [["g", label], ["t", m ? m[2] : r.text]]);
+      if (m) {
+        const nm = document.createElement("b");
+        nm.className = m[1] === "Coach" ? "who coach" : "who dickie";
+        nm.textContent = m[1] === "Coach" ? "Coach: " : "Dickie: ";
+        li.lastChild.prepend(nm);
+      }
+      li.firstChild.classList.add(r.result === "Victory" ? "win" : r.result === "Defeat" ? "loss" : "x");
+      ol.append(li);
+    }
+  } catch (e) {}
+}
+setInterval(pollNotes, 3000);   // callouts and coach lines land here mid-game
+pollNotes();
+listen();
+setInterval(() => {
+  const c = gameClock();
+  $("clock").textContent = c == null ? "-:--" : mmss(c);
+  if (plans && state) { main.tick(false); ref.tick(false); cueTick(c); renderCheckpoints(); }
+}, 250);
+poll();
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+/* Compact in-game mode (Angular page only; styles.css stays the old page's CSS). Layout only: hidden parts keep running. */
+.wrap.compact{max-width:1100px;height:auto;min-height:0;gap:16px}
+.compact .lanebox,.compact .pointers,.compact .cps,.compact .tls,.compact .feed{display:none}
+/* Top bar: clock, plan, Voice (must stay clickable to arm sound after a reload), the Compact toggle, status */
+.compact .top > a,.compact .top > button:not(.keep),.compact .top .vs{display:none}
+.compact .clock{font-size:5.5rem}
+.compact .plan{font-size:1.7rem}
+.compact .hud{grid-template-columns:minmax(0,1fr)}
+.compact .call{min-height:0;padding:16px 22px}
+.compact .call p{font-size:2.6rem}
+.compact .call small{font-size:1rem}
+.compact .stats{gap:14px}
+.compact .stat{padding:12px 16px}
+.compact .stat small{font-size:.95rem}
+.compact .stat b{font-size:3.4rem;line-height:1.1}
+.compact .stat span,.compact #roomtxt,.compact .gastxt{font-size:1.15rem}
+.compact .room{height:14px;margin-top:8px}
+
+/* Next steps (rendered only in compact mode) */
+.nextsteps{background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--terran);padding:10px 14px}
+.nextsteps ol{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.nextsteps li{display:grid;grid-template-columns:4.2ch 2.6ch minmax(0,1fr);gap:16px;align-items:baseline;padding:8px 12px;
+  background:#0a111a;border-left:4px solid var(--terran);font-size:1.9rem;line-height:1.15}
+.nextsteps li:first-child{background:#16263a}
+.nextsteps li .tm{font-family:var(--mono);color:#fff}
+.nextsteps li .sp{font-family:var(--mono);color:var(--muted)}
+.nextsteps li .ac{font-weight:700}
+.nextsteps li.due{border-left-color:var(--alert);background:#2a1a0c;box-shadow:inset 0 0 0 2px var(--alert)}
+.nextsteps li.idle{display:block;color:var(--muted);font-size:1.2rem}
+@media (max-width:560px){.compact .clock{font-size:3.4rem}.compact .call p{font-size:1.7rem}.compact .stat b{font-size:2rem}
+  .nextsteps li{font-size:1.25rem;gap:10px}}

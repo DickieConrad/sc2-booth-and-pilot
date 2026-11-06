@@ -1,0 +1,29 @@
+{
+  "_doc": "mic.py intent lane (live/intents.py): the spoken answer when Dickie asks how to beat a unit (Jev intent counter_unit). One short, action-first line per unit for a Terran player with a Protoss ally. keys: whole words, any case, a space also matches a hyphen; the unit named first in the callout wins. After editing a line, render its clip: live\\.python\\python.exe live\\voice\\render_counters.py",
+  "units": {
+    "Thor": {"keys": ["thor", "thors"], "line": "Thors: Marauders, sieged Tanks, and Immortals from your ally."},
+    "Tempest": {"keys": ["tempest", "tempests"], "line": "Tempests: mass Vikings and push before they pile up."},
+    "Carrier": {"keys": ["carrier", "carriers"], "line": "Carriers: Vikings and Thors. Shoot the Carriers, not the Interceptors."},
+    "Colossus": {"keys": ["colossus", "colossi", "colossuses"], "line": "Colossus: Vikings now, keep them over your army."},
+    "Immortal": {"keys": ["immortal", "immortals"], "line": "Immortals: Marines and Ghosts. No Tanks or Thors into them."},
+    "Disruptor": {"keys": ["disruptor", "disruptors"], "line": "Disruptors: spread out, back off the shot, then re-engage."},
+    "Lurker": {"keys": ["lurker", "lurkers"], "line": "Lurkers: scan first, then Tanks outrange them. Don't walk in."},
+    "Ultralisk": {"keys": ["ultralisk", "ultralisks", "ultra", "ultras"], "line": "Ultras: Marauders and Ghosts, keep armor upgrades going."},
+    "Brood Lord": {"keys": ["brood lord", "brood lords", "broodlord", "broodlords"], "line": "Brood Lords: Vikings now, hit before they mass."},
+    "Mutalisk": {"keys": ["mutalisk", "mutalisks", "muta", "mutas"], "line": "Mutas: Turret in every mineral line, more Marines, a Thor."},
+    "Baneling": {"keys": ["baneling", "banelings", "bane", "banes"], "line": "Banelings: split your Marines, Tanks and Hellbats in front."},
+    "Liberator": {"keys": ["liberator", "liberators", "lib", "libs"], "line": "Liberators: step out of the circle, Vikings on them."},
+    "Tank": {"keys": ["siege tank", "siege tanks", "tank", "tanks"], "line": "Tanks: don't walk in. Drop behind them or flank wide."},
+    "Battlecruiser": {"keys": ["battlecruiser", "battlecruisers", "battle cruiser", "battle cruisers", "bc", "bcs"], "line": "Battlecruisers: Vikings and Thors, Turrets at home."},
+    "Viper": {"keys": ["viper", "vipers"], "line": "Vipers: Ghosts snipe them, Vikings out, spread your army."},
+    "Infestor": {"keys": ["infestor", "infestors"], "line": "Infestors: Ghosts, snipe and EMP them. Spread against Fungal."},
+    "Roach": {"keys": ["roach", "roaches"], "line": "Roaches: Marauders and Tanks, Bunker at the natural."},
+    "Zealot": {"keys": ["zealot", "zealots"], "line": "Zealots: Hellbats in front, Marauders with Concussive."},
+    "Stalker": {"keys": ["stalker", "stalkers"], "line": "Stalkers: Marauders with Concussive, watch your main's cliffs."},
+    "Marine": {"keys": ["marine", "marines"], "line": "Marines: sieged Tanks, Hellbats, and Widow Mines."},
+    "Hellion": {"keys": ["hellion", "hellions", "hellbat", "hellbats"], "line": "Hellions: wall off, Bunker at the natural, Marauders."},
+    "Banshee": {"keys": ["banshee", "banshees"], "line": "Banshees: Turret in each mineral line, keep a scan, Vikings."},
+    "Oracle": {"keys": ["oracle", "oracles"], "line": "Oracle: Turret in the main mineral line, Marines home."},
+    "DT": {"keys": ["dt", "dts", "dark templar", "dark templars"], "line": "DTs: Turret in each mineral line, save a scan."}
+  }
+}

@@ -1,0 +1,15 @@
+[package]
+name = "panel-reader"
+version = "0.1.0"
+edition = "2021"
+description = "Experiment: Rust port of live/panel_ocr.py (SC2 resource-panel digit reader)"
+
+[dependencies]
+png = "0.17"
+serde_json = "1"
+tiny_http = "0.12"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
