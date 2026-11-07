@@ -10,3 +10,5 @@ bot/.pkgs
 bot/out/
 tools/out/
 __pycache__/
+# ORCHA agent mission files (local only)
+.orcha/missions/
